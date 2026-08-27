@@ -22,7 +22,10 @@ let ExParcial = Double readLine() ?? " ") ?? 0.0
 print("Nota del Examen Final:")
 let notaFinal = Double(readLine() ?? "") ?? 0.0
 
-// commit del calculo
+// Cálculo del promedio ponderado
+let promedio = (notaParcial * pesoParcial) +
+               (notaTrabajo * pesoTrabajo) +
+               (notaFinal * pesoFinal)
 
 // commit de mostrar los datos
 
