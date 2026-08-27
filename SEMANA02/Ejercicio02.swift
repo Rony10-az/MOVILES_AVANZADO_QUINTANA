@@ -27,7 +27,13 @@ let promedio = (notaParcial * pesoParcial) +
                (notaTrabajo * pesoTrabajo) +
                (notaFinal * pesoFinal)
 
-// commit de mostrar los datos
+// Mostrar los datos
+print("\n----- RESULTADO -----")
+print("Alumno: \(alumno)")
+print("Nota Parcial: \(notaParcial)")
+print("Nota Trabajo: \(notaTrabajo)")
+print("Nota Final: \(notaFinal)")
+print("Promedio Final: \(promedio)")
 
 
 
