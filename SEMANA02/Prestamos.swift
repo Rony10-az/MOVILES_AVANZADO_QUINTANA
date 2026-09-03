@@ -39,6 +39,7 @@ while true {
     print("1. Alumno")
     print("2. Docente")
     print("3. Administrador")
+    print("4. Coordinador")
 
     print("")
     print("Ingrese el tipo de usuario:")
@@ -75,7 +76,7 @@ while true {
 
         print("")
         print("❌ ERROR: Tipo de usuario no válido.")
-        print("Ingrese Alumno, Docente o Administrador.")
+        pprint("Ingrese Alumno, Docente, Administrador o Coordinador.")
 
         continue
     }
@@ -360,37 +361,52 @@ if diasAtraso > 0 {
 
     for dia in 1...diasAtraso {
 
-        let fechaAtraso = calendario.date(
-            byAdding: .day,
-            value: dia,
-            to: fechaPrometida
-        )!
+        for dia in 1...diasAtraso {
 
+                let fechaAtraso = calendario.date(
+                    byAdding: .day,
+                    value: dia,
+                    to: fechaPrometida
+                )!
 
-        let fechaTexto = formatoFecha.string(
-            from: fechaAtraso
-        )
+                let fechaTexto = formatoFecha.string(
+                    from: fechaAtraso
+                )
 
+                var multaDia = 0.0
+                var porcentaje = ""
 
-        var multaDia = 0.0
-        var porcentaje = ""
+                if dia <= 3 {
 
+                    // Día 1 al 3
+                    multaDia = 0.0
+                    porcentaje = "0%"
 
-        if dia <= 3 {
+                } else if dia <= 6 {
 
-            multaDia = multaPorDia
-            porcentaje = "100%"
+                    // Día 4 al 6
+                    multaDia = multaPorDia * 0.25
+                    porcentaje = "25%"
 
-        } else if dia <= 6 {
+                } else if dia <= 10 {
 
-            multaDia = multaPorDia * 1.50
-            porcentaje = "150%"
+                    // Día 7 al 10
+                    multaDia = multaPorDia * 0.50
+                    porcentaje = "50%"
 
-        } else {
+                } else if dia <= 20 {
 
-            multaDia = multaPorDia * 2.00
-            porcentaje = "200%"
-        }
+                    // Día 11 al 20
+                    multaDia = multaPorDia
+                    porcentaje = "100%"
+
+                } else {
+
+                    // Día 21 en adelante
+                    multaDia = 0.0
+                    porcentaje = "Suspendido"
+                }
+
 
 
         multaAcumulada += multaDia
