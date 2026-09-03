@@ -289,25 +289,29 @@ if diasAtraso > 0 {
     for dia in 1...diasAtraso {
 
         if dia <= 3 {
-
             // Día 1 al 3
-            // 100%
-
-            multaTotal += multaPorDia
+            // 0% de multa
+            multaTotal += 0.0
 
         } else if dia <= 6 {
-
             // Día 4 al 6
-            // 150%
+            // 25% de la multa normal
+            multaTotal += multaPorDia * 0.25
 
-            multaTotal += multaPorDia * 1.50
+        } else if dia <= 10 {
+            // Día 7 al 10
+            // 50% de la multa normal
+            multaTotal += multaPorDia * 0.50
+
+        } else if dia <= 20 {
+            // Día 11 al 20
+            // 100% de la multa normal
+            multaTotal += multaPorDia
 
         } else {
-
-            // Día 7 en adelante
-            // 200%
-
-            multaTotal += multaPorDia * 2.00
+            // Después de 20 días
+            // El usuario queda suspendido
+            break
         }
     }
 }
@@ -331,14 +335,10 @@ if diasAtraso == 0 {
 
 var situacionUsuario = ""
 
-// Solo el docente puede quedar suspendido
 
-if tipoUsuario == "Docente" && diasAtraso >= 10 {
-
+if diasAtraso > 20 {
     situacionUsuario = "Suspendido"
-
 } else {
-
     situacionUsuario = "Habilitado"
 }
 
