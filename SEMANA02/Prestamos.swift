@@ -65,6 +65,11 @@ while true {
         diasPermitidos = diasAdministrador
         multaPorDia = multaAdministrador
         tipoUsuario = "Administrador"
+    
+    case "coordinador":
+        diasPermitidos = 15
+        multaPorDia = 4.00
+        tipoUsuario = "Coordinador"
 
     default:
 
