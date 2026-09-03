@@ -5,6 +5,7 @@ import Foundation
 let diasAlumno = 7
 let diasDocente = 15
 let diasAdministrador = 10
+let diasCoordinador = 15
 
 
 // MARK: - MULTA NORMAL POR DÍA
@@ -12,6 +13,7 @@ let diasAdministrador = 10
 let multaAlumno = 1.50
 let multaDocente = 2.00
 let multaAdministrador = 3.00
+let multaCoordinador = 4.00
 
 
 // MARK: - INGRESO DE DATOS
@@ -19,8 +21,8 @@ let multaAdministrador = 3.00
 print("================================================")
 print("          SISTEMA DE PRÉSTAMO DE LIBROS")
 print("================================================")
-
 print("")
+
 print("Título del libro:")
 let tituloLibro = readLine() ?? ""
 
@@ -31,7 +33,6 @@ var tipoUsuario = ""
 var diasPermitidos = 0
 var multaPorDia = 0.0
 
-
 while true {
 
     print("")
@@ -40,56 +41,49 @@ while true {
     print("2. Docente")
     print("3. Administrador")
     print("4. Coordinador")
-
     print("")
+
     print("Ingrese el tipo de usuario:")
-
     tipoUsuario = readLine() ?? ""
-
 
     switch tipoUsuario.lowercased() {
 
     case "alumno":
-
         diasPermitidos = diasAlumno
         multaPorDia = multaAlumno
         tipoUsuario = "Alumno"
 
     case "docente":
-
         diasPermitidos = diasDocente
         multaPorDia = multaDocente
         tipoUsuario = "Docente"
 
     case "administrador":
-
         diasPermitidos = diasAdministrador
         multaPorDia = multaAdministrador
         tipoUsuario = "Administrador"
-    
+
     case "coordinador":
-        diasPermitidos = 15
-        multaPorDia = 4.00
+        diasPermitidos = diasCoordinador
+        multaPorDia = multaCoordinador
         tipoUsuario = "Coordinador"
 
     default:
-
         print("")
         print("❌ ERROR: Tipo de usuario no válido.")
-        pprint("Ingrese Alumno, Docente, Administrador o Coordinador.")
-
+        print("Ingrese Alumno, Docente, Administrador o Coordinador.")
         continue
     }
 
     break
 }
 
+
 // MARK: - CONFIGURACIÓN DEL CALENDARIO
 
 let calendario = Calendar.current
 
 let formatoFecha = DateFormatter()
-
 formatoFecha.dateFormat = "dd/MM/yyyy"
 formatoFecha.locale = Locale(identifier: "es_PE")
 formatoFecha.calendar = calendario
@@ -114,22 +108,18 @@ while true {
     print("================================================")
     print("             DATOS DEL PRÉSTAMO")
     print("================================================")
-
     print("")
-    print("Fecha de préstamo (dd/MM/yyyy):")
 
+    print("Fecha de préstamo (dd/MM/yyyy):")
     fechaPrestamoTexto = readLine() ?? ""
 
-
     // Validar fecha de préstamo
-
     guard let fechaPrestamoIngresada =
             formatoFecha.date(from: fechaPrestamoTexto) else {
 
         print("")
         print("❌ FECHA DE PRÉSTAMO NO VÁLIDA.")
         print("Utiliza el formato dd/MM/yyyy.")
-
         continue
     }
 
@@ -137,22 +127,17 @@ while true {
 
 
     // Fecha prometida
-
     print("")
     print("Fecha prometida de devolución (dd/MM/yyyy):")
-
     fechaPrometidaTexto = readLine() ?? ""
 
-
     // Validar fecha prometida
-
     guard let fechaPrometidaIngresada =
             formatoFecha.date(from: fechaPrometidaTexto) else {
 
         print("")
         print("❌ FECHA PROMETIDA NO VÁLIDA.")
         print("Utiliza el formato dd/MM/yyyy.")
-
         continue
     }
 
@@ -160,20 +145,17 @@ while true {
 
 
     // Validar orden de fechas
-
     if fechaPrometida < fechaPrestamo {
 
         print("")
         print("❌ ERROR")
         print("La fecha prometida no puede ser anterior")
         print("a la fecha de préstamo.")
-
         continue
     }
 
 
     // Calcular días solicitados
-
     let componentesPrestamo = calendario.dateComponents(
         [.day],
         from: fechaPrestamo,
@@ -184,26 +166,21 @@ while true {
 
 
     // Validar máximo permitido
-
     if diasSolicitados > diasPermitidos {
 
         print("")
         print("================================================")
         print("             ❌ PRÉSTAMO NO PERMITIDO")
         print("================================================")
-
         print("")
         print("Usuario: \(tipoUsuario)")
         print("Días máximos permitidos: \(diasPermitidos)")
         print("Días solicitados: \(diasSolicitados)")
-
         print("")
         print("NO SE PUEDE REALIZAR EL PRÉSTAMO.")
         print("El usuario supera el máximo de días permitido.")
-
         print("")
         print("Ingrese nuevamente las fechas.")
-
         print("================================================")
 
         continue
@@ -211,16 +188,13 @@ while true {
 
 
     // Préstamo permitido
-
     print("")
     print("================================================")
     print("              ✅ PRÉSTAMO PERMITIDO")
     print("================================================")
-
     print("Usuario: \(tipoUsuario)")
     print("Días máximos permitidos: \(diasPermitidos)")
     print("Días solicitados: \(diasSolicitados)")
-
     print("================================================")
 
     break
@@ -236,9 +210,7 @@ while true {
 
     print("")
     print("Fecha real de devolución (dd/MM/yyyy):")
-
     fechaDevolucionTexto = readLine() ?? ""
-
 
     guard let fechaDevolucionIngresada =
             formatoFecha.date(from: fechaDevolucionTexto) else {
@@ -246,7 +218,6 @@ while true {
         print("")
         print("❌ FECHA DE DEVOLUCIÓN NO VÁLIDA.")
         print("Utiliza el formato dd/MM/yyyy.")
-
         continue
     }
 
@@ -259,7 +230,6 @@ while true {
         print("❌ ERROR")
         print("La fecha real de devolución no puede ser")
         print("anterior a la fecha de préstamo.")
-
         continue
     }
 
@@ -323,11 +293,8 @@ if diasAtraso > 0 {
 var estadoPrestamo = ""
 
 if diasAtraso == 0 {
-
     estadoPrestamo = "Devuelto a tiempo"
-
 } else {
-
     estadoPrestamo = "Devuelto con atraso"
 }
 
@@ -335,7 +302,6 @@ if diasAtraso == 0 {
 // MARK: - SITUACIÓN DEL USUARIO
 
 var situacionUsuario = ""
-
 
 if diasAtraso > 20 {
     situacionUsuario = "Suspendido"
@@ -352,65 +318,58 @@ if diasAtraso > 0 {
     print("==============================================================")
     print("                  CALENDARIO DE ATRASO")
     print("==============================================================")
-
     print("Fecha        Atraso       Multa día       Acumulado")
     print("--------------------------------------------------------------")
 
     var multaAcumulada = 0.0
 
-
     for dia in 1...diasAtraso {
 
-        for dia in 1...diasAtraso {
+        let fechaAtraso = calendario.date(
+            byAdding: .day,
+            value: dia,
+            to: fechaPrometida
+        )!
 
-                let fechaAtraso = calendario.date(
-                    byAdding: .day,
-                    value: dia,
-                    to: fechaPrometida
-                )!
+        let fechaTexto = formatoFecha.string(
+            from: fechaAtraso
+        )
 
-                let fechaTexto = formatoFecha.string(
-                    from: fechaAtraso
-                )
+        var multaDia = 0.0
+        var porcentaje = ""
 
-                var multaDia = 0.0
-                var porcentaje = ""
+        if dia <= 3 {
 
-                if dia <= 3 {
+            // Día 1 al 3
+            multaDia = 0.0
+            porcentaje = "0%"
 
-                    // Día 1 al 3
-                    multaDia = 0.0
-                    porcentaje = "0%"
+        } else if dia <= 6 {
 
-                } else if dia <= 6 {
+            // Día 4 al 6
+            multaDia = multaPorDia * 0.25
+            porcentaje = "25%"
 
-                    // Día 4 al 6
-                    multaDia = multaPorDia * 0.25
-                    porcentaje = "25%"
+        } else if dia <= 10 {
 
-                } else if dia <= 10 {
+            // Día 7 al 10
+            multaDia = multaPorDia * 0.50
+            porcentaje = "50%"
 
-                    // Día 7 al 10
-                    multaDia = multaPorDia * 0.50
-                    porcentaje = "50%"
+        } else if dia <= 20 {
 
-                } else if dia <= 20 {
+            // Día 11 al 20
+            multaDia = multaPorDia
+            porcentaje = "100%"
 
-                    // Día 11 al 20
-                    multaDia = multaPorDia
-                    porcentaje = "100%"
+        } else {
 
-                } else {
-
-                    // Día 21 en adelante
-                    multaDia = 0.0
-                    porcentaje = "Suspendido"
-                }
-
-
+            // Día 21 en adelante
+            multaDia = 0.0
+            porcentaje = "Suspendido"
+        }
 
         multaAcumulada += multaDia
-
 
         print(
             "\(fechaTexto)    " +
@@ -433,6 +392,8 @@ if diasAtraso > 0 {
     print("              NO EXISTEN DÍAS DE ATRASO")
     print("==============================================================")
 }
+
+
 // MARK: - RESUMEN FINAL
 
 print("")
@@ -477,13 +438,13 @@ print("================================================")
 
 // MARK: - MENSAJE DE SUSPENSIÓN
 
-if tipoUsuario == "Docente" && diasAtraso >= 10 {
+if diasAtraso > 20 {
 
     print("")
     print("⚠️ =============================================")
     print("              USUARIO SUSPENDIDO")
     print("=============================================")
-    print("El docente alcanzó \(diasAtraso)")
+    print("El usuario alcanzó \(diasAtraso)")
     print("días de atraso.")
     print("=============================================")
 }
