@@ -29,61 +29,61 @@ import Foundation // Se importa Foundation para poder usar funciones de texto co
 let estaciones: [String: [String: String]] = [
 
     // ---------------------- LÍNEA 1 (26 estaciones, 100% operativa) ----------------------
-    "Villa El Salvador": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación terminal sur de la Línea 1
-    "Parque Industrial": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Pumacahua": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna"], // No tiene ascensor: usa silla salvaescaleras
-    "Villa María": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna"], // No tiene ascensor: usa silla salvaescaleras
-    "María Auxiliadora": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna"], // No tiene ascensor: usa silla salvaescaleras
-    "San Juan": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Atocongo": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 3 (planificada)"], // Futuro cruce con la Línea 3 (proyecto)
-    "Jorge Chávez": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Ayacucho": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Cabitos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 3 (planificada)"], // Futuro cruce con la Línea 3 (proyecto)
-    "Angamos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 6 (planificada)"], // Futuro cruce con la Línea 6 (proyecto)
-    "San Borja Sur": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna"], // No tiene ascensor: usa silla salvaescaleras
-    "La Cultura": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 4 (planificada)"], // Futuro cruce con la Línea 4 (proyecto)
-    "Arriola": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 2 (en construcción)"], // Cercana al futuro cruce con Línea 2
-    "Gamarra": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 2 (en construcción)"], // Cruce planificado con estación "28 de Julio" de la Línea 2
-    "Miguel Grau": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "El Ángel": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Presbítero Maestro": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Caja de Agua": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Pirámide del Sol": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Los Jardines": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Los Postes": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "San Carlos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "San Martín": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Santa Rosa": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación intermedia sin conexión adicional
-    "Bayóvar": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Estación terminal norte de la Línea 1
+    "Villa El Salvador": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa El Salvador", "referencias": "Terminal sur de la línea, zona central de Villa El Salvador"],
+    "Parque Industrial": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa El Salvador", "referencias": "Junto al Parque Industrial de Villa El Salvador"],
+    "Pumacahua": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa María del Triunfo", "referencias": "Zona alta de Villa María del Triunfo, cerca a la Av. Pachacútec"],
+    "Villa María": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa María del Triunfo", "referencias": "Villa María del Triunfo, sobre la Av. Pachacútec"],
+    "María Auxiliadora": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa María del Triunfo", "referencias": "Junto al Hospital María Auxiliadora"],
+    "San Juan": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Miraflores", "referencias": "San Juan de Miraflores, cerca al mercado zonal"],
+    "Atocongo": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 3 (planificada)", "distrito": "San Juan de Miraflores", "referencias": "Junto al Óvalo Atocongo, nudo de buses hacia el sur de Lima"],
+    "Jorge Chávez": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santiago de Surco", "referencias": "Límite entre Santiago de Surco y San Juan de Miraflores"],
+    "Ayacucho": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santiago de Surco", "referencias": "Zona residencial de Santiago de Surco"],
+    "Cabitos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 3 (planificada)", "distrito": "Santiago de Surco", "referencias": "Cerca al cuartel militar conocido como Los Cabitos"],
+    "Angamos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 6 (planificada)", "distrito": "San Borja", "referencias": "Cruce con la Av. Angamos y la Vía Expresa, cerca a Surquillo"],
+    "San Borja Sur": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "No", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Borja", "referencias": "Zona residencial de San Borja, cerca a la Av. Aviación"],
+    "La Cultura": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 4 (planificada)", "distrito": "San Borja", "referencias": "Junto al Museo de la Nación y el Coliseo Eduardo Dibós"],
+    "Arriola": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 2 (en construcción)", "distrito": "La Victoria", "referencias": "Zona comercial de La Victoria, sobre la Av. Nicolás Arriola"],
+    "Gamarra": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 2 (en construcción)", "distrito": "La Victoria", "referencias": "Emporio comercial y textil de Gamarra"],
+    "Miguel Grau": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Cercado de Lima", "referencias": "Cercado de Lima, cerca al centro histórico"],
+    "El Ángel": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "El Agustino", "referencias": "El Agustino, cerca al Cementerio El Ángel"],
+    "Presbítero Maestro": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Cercado de Lima", "referencias": "Junto al Cementerio Presbítero Maestro"],
+    "Caja de Agua": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "San Juan de Lurigancho, zona conocida como Caja de Agua"],
+    "Pirámide del Sol": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "San Juan de Lurigancho, cerca a la huaca que da nombre a la zona"],
+    "Los Jardines": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona residencial Los Jardines, San Juan de Lurigancho"],
+    "Los Postes": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona residencial Los Postes, San Juan de Lurigancho"],
+    "San Carlos": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona San Carlos, San Juan de Lurigancho"],
+    "San Martín": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona San Martín, San Juan de Lurigancho"],
+    "Santa Rosa": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona Santa Rosa, San Juan de Lurigancho"],
+    "Bayóvar": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "San Juan de Lurigancho", "referencias": "Zona comercial de Bayóvar, uno de los sectores más poblados de SJL"],
 
     // ---------------------- LÍNEA 2 (27 estaciones, en construcción por tramos) ----------------------
-    "Evitamiento": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Una de las 5 estaciones ya operativas en 2026
-    "Óvalo Santa Anita": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Una de las 5 estaciones ya operativas en 2026
-    "Colectora Industrial": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Una de las 5 estaciones ya operativas en 2026
-    "Hermilio Valdizán": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Una de las 5 estaciones ya operativas en 2026
-    "Mercado Santa Anita": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Una de las 5 estaciones ya operativas en 2026
-    "Vista Alegre": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Prolongación Javier Prado": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Municipalidad de Ate": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Circunvalación": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "San Juan de Dios": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Nicolás Ayllón": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "28 de Julio": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 1 (Gamarra / Arriola)"], // Punto de transbordo con la Línea 1
-    "Cangallo": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Plaza Manco Cápac": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Estación Central": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "Sí", "transbordo": "Línea 4 (planificada)"], // Principal cruce con el Metropolitano
-    "Plaza Bolognesi": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Parque Murillo": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Tingo María": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "La Alborada": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Elio": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "San Marcos": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Óscar R. Benavides": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Carmen de La Legua": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Insurgentes": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Juan Pablo II": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Buenos Aires": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"], // Aún en obra según cronograma 2026
-    "Puerto del Callao": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna"] // Estación terminal de la Línea 2 en el Callao
+    "Evitamiento": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Ate", "referencias": "Sobre la Vía de Evitamiento, en Ate"],
+    "Óvalo Santa Anita": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santa Anita", "referencias": "Junto al óvalo principal de Santa Anita"],
+    "Colectora Industrial": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santa Anita", "referencias": "Zona industrial de Santa Anita"],
+    "Hermilio Valdizán": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santa Anita", "referencias": "Cerca al Hospital Hermilio Valdizán"],
+    "Mercado Santa Anita": ["linea": "Línea 2", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santa Anita", "referencias": "Junto al Mercado Mayorista de Santa Anita"],
+    "Vista Alegre": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Santa Anita", "referencias": "Zona Vista Alegre, Santa Anita"],
+    "Prolongación Javier Prado": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "El Agustino", "referencias": "Sobre la Av. Javier Prado (prolongación), El Agustino"],
+    "Municipalidad de Ate": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Ate", "referencias": "Junto al Palacio Municipal de Ate"],
+    "Circunvalación": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "El Agustino", "referencias": "Sobre la Av. Circunvalación, El Agustino"],
+    "San Juan de Dios": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "El Agustino", "referencias": "El Agustino, zona San Juan de Dios"],
+    "Nicolás Ayllón": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "El Agustino", "referencias": "Sobre la Av. Nicolás Ayllón, El Agustino"],
+    "28 de Julio": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Línea 1 (Gamarra / Arriola)", "distrito": "La Victoria", "referencias": "Sobre la Av. 28 de Julio, La Victoria (cruce con Línea 1)"],
+    "Cangallo": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Cercado de Lima", "referencias": "Cercado de Lima, sobre el Jr. Cangallo"],
+    "Plaza Manco Cápac": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "La Victoria", "referencias": "Junto a la Plaza Manco Cápac, La Victoria"],
+    "Estación Central": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "Sí", "transbordo": "Línea 4 (planificada)", "distrito": "Cercado de Lima", "referencias": "Cerca de la Av. Emancipación, centro histórico de Lima"],
+    "Plaza Bolognesi": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Breña", "referencias": "Junto a la Plaza Bolognesi, límite Breña/Cercado"],
+    "Parque Murillo": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Breña", "referencias": "Breña, cerca al Parque Murillo"],
+    "Tingo María": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Breña", "referencias": "Breña, zona Tingo María"],
+    "La Alborada": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Breña", "referencias": "Breña, zona La Alborada"],
+    "Elio": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Bellavista", "referencias": "Bellavista (Callao), zona Elio"],
+    "San Marcos": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Bellavista", "referencias": "Bellavista (Callao), zona San Marcos"],
+    "Óscar R. Benavides": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Bellavista", "referencias": "Sobre la Av. Óscar R. Benavides (ex Av. Colonial), Bellavista"],
+    "Carmen de La Legua": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Carmen de la Legua Reynoso", "referencias": "Carmen de la Legua Reynoso, zona central"],
+    "Insurgentes": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Carmen de la Legua Reynoso", "referencias": "Sobre la Av. Los Insurgentes, Carmen de la Legua"],
+    "Juan Pablo II": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Callao", "referencias": "Callao, zona Juan Pablo II"],
+    "Buenos Aires": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Callao", "referencias": "Sobre la Av. Buenos Aires, Callao"],
+    "Puerto del Callao": ["linea": "Línea 2", "estado": "En construcción", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Callao", "referencias": "Terminal de la línea, cerca al Puerto del Callao"]
 ] // Fin del diccionario principal de estaciones
 
 // ----------------------------------------------------------------------------
@@ -213,7 +213,8 @@ func mostrarDetalleEstacion(_ nombreEstacion: String) { // Recibe el nombre de l
     print("Estado.........................: \(detalle["estado"] ?? "N/D")") // Imprime si está operativa o en construcción
     print("Ascensor.......................: \(detalle["ascensor"] ?? "N/D")") // Imprime si tiene ascensor
     print("Conexión con Metropolitano.....: \(detalle["metropolitano"] ?? "N/D")") // Imprime conexión con Metropolitano
-    print("Transbordo con otra línea......: \(detalle["transbordo"] ?? "N/D")") // Imprime si conecta con otra línea
+    print("Transbordo con otra línea......: \(detalle["transbordo"] ?? "N/D")")//Imprime si conecta con otra línea
+    print("Referencias (cómo ubicarte)....: \(detalle["referencias"] ?? "Pendiente de completar por el equipo")") // Punto de referencia cercano
     imprimirSeparador() // Raya que separa el detalle del horario (pre-conexión estación → horario)
     if let horarioLinea = horariosPorLinea[lineaDeLaEstacion] { // Busca el horario de la línea de esta estación
         print("🕒 Horario referencial de \(lineaDeLaEstacion):") // Encabezado del bloque de horario
@@ -331,6 +332,100 @@ func sugerirRuta(origen: String, destino: String) { // Recibe estación de orige
 } // Fin de la función sugerirRuta
 
 // ----------------------------------------------------------------------------
+// BLOQUE 1A: Diccionario estructurado de transbordos (para poder CONTAR estaciones)
+// ----------------------------------------------------------------------------
+// conexionesEntreLineas ya existe pero guarda un texto libre; para calcular
+// cuántas estaciones faltan necesitamos los nombres separados y "limpios".
+let estacionesDeTransbordo: [String: [String: String]] = [
+    "Línea 1-Línea 2": ["enEstaLinea": "Gamarra", "enLineaDestino": "28 de Julio"], // Transbordo yendo de L1 a L2
+    "Línea 2-Línea 1": ["enEstaLinea": "28 de Julio", "enLineaDestino": "Gamarra"]  // Transbordo yendo de L2 a L1
+] // Fin del diccionario de transbordos estructurado
+
+// ----------------------------------------------------------------------------
+// BLOQUE 1B: Función auxiliar para saber en qué POSICIÓN va una estación
+// ----------------------------------------------------------------------------
+func obtenerIndiceEnLinea(_ nombreEstacion: String, _ listaEstaciones: [String]) -> Int? { // Recibe la estación y el array de la línea
+    for (indice, estacion) in listaEstaciones.enumerated() { // Recorre el array con su posición (índice)
+        if estacion == nombreEstacion { // Si la estación actual es la que buscamos
+            return indice // Devuelve la posición donde está
+        } // Cierra el if
+    } // Cierra el for
+    return nil // Si no la encontró en esa línea, devuelve nil
+} // Fin de la función obtenerIndiceEnLinea
+
+// ----------------------------------------------------------------------------
+// BLOQUE 1C: PLANIFICADOR DE VIAJE (nuevo requerimiento)
+// ----------------------------------------------------------------------------
+// Responde exactamente lo que pediste: cuántas estaciones faltan y cuáles
+// hay que pasar para llegar al destino. Pensado para alguien que recién
+// empieza a usar el sistema (por eso muestra el recorrido paso a paso).
+func planificarViaje(origen: String, destino: String) { // Recibe estación de origen y de destino
+    guard let origenReal = buscarNombreEstacion(origen) else { // Valida que el origen exista (ya sin tildes gracias a normalizar)
+        print("⚠️ La estación de origen '\(origen)' no fue encontrada.") // Aviso de error
+        return // Sale si no existe
+    } // Cierra el guard
+    guard let destinoReal = buscarNombreEstacion(destino) else { // Valida que el destino exista
+        print("⚠️ La estación de destino '\(destino)' no fue encontrada.") // Aviso de error
+        return // Sale si no existe
+    } // Cierra el guard
+    let detalleOrigen = estaciones[origenReal] ?? [:] // Detalle completo del origen
+    let detalleDestino = estaciones[destinoReal] ?? [:] // Detalle completo del destino
+    let lineaOrigen = detalleOrigen["linea"] ?? "" // Línea a la que pertenece el origen
+    let lineaDestino = detalleDestino["linea"] ?? "" // Línea a la que pertenece el destino
+    imprimirTitulo("PLANIFICADOR DE VIAJE: \(origenReal.uppercased()) → \(destinoReal.uppercased())") // Título encuadrado
+    if lineaOrigen == lineaDestino { // Caso simple: todo dentro de la misma línea, sin transbordo
+        let listaEstaciones = lineas[lineaOrigen] ?? [] // Array ordenado de esa línea
+        guard let indiceOrigen = obtenerIndiceEnLinea(origenReal, listaEstaciones), // Posición del origen
+              let indiceDestino = obtenerIndiceEnLinea(destinoReal, listaEstaciones) else { // Posición del destino
+            print("⚠️ No se pudo ubicar alguna estación dentro de \(lineaOrigen).") // Caso raro de error
+            imprimirSeparador() // Cierra el bloque igual
+            return // Sale de la función
+        } // Cierra el guard doble
+        let estacionesAPasar = abs(indiceDestino - indiceOrigen) // Resta las posiciones: eso son las paradas de diferencia
+        print("🚈 Misma línea: \(lineaOrigen). No necesitas transbordo.") // Mensaje principal
+        print("   Te faltan \(estacionesAPasar) estación(es) desde \(origenReal) hasta \(destinoReal).") // Respuesta pedida
+        let inicio = min(indiceOrigen, indiceDestino) // Índice menor entre origen y destino
+        let fin = max(indiceOrigen, indiceDestino) // Índice mayor entre origen y destino
+        var tramo: [String] = [] // Array donde armamos el recorrido paso a paso
+        var i = inicio // Contador que arranca en el índice menor
+        while i <= fin { // Mientras no pasemos el índice mayor
+            tramo.append(listaEstaciones[i]) // Agrega la estación de esa posición al tramo
+            i += 1 // Avanza una posición
+        } // Cierra el while
+        if indiceOrigen > indiceDestino { // Si el usuario viaja "hacia atrás" en el array
+            tramo.reverse() // Invierte el orden para que se lea desde el origen real
+        } // Cierra el if
+        print("   Recorrido: " + tramo.joined(separator: " → ")) // Muestra estación por estación
+    } else { // Caso con transbordo: dos líneas distintas
+        let clave = "\(lineaOrigen)-\(lineaDestino)" // Arma la clave para buscar el transbordo
+        guard let transbordo = estacionesDeTransbordo[clave] else { // Busca el punto de cambio de línea
+            print("❌ Aún no hay una conexión registrada entre \(lineaOrigen) y \(lineaDestino).") // Sin conexión conocida
+            imprimirSeparador() // Cierra el bloque
+            return // Sale de la función
+        } // Cierra el guard
+        let estacionCambioOrigen = transbordo["enEstaLinea"] ?? "" // Estación de transbordo en la línea de origen
+        let estacionCambioDestino = transbordo["enLineaDestino"] ?? "" // Estación de transbordo en la línea de destino
+        let listaOrigen = lineas[lineaOrigen] ?? [] // Array de la línea de origen
+        let listaDestino = lineas[lineaDestino] ?? [] // Array de la línea de destino
+        guard let i1 = obtenerIndiceEnLinea(origenReal, listaOrigen), // Posición del origen en su línea
+              let i2 = obtenerIndiceEnLinea(estacionCambioOrigen, listaOrigen), // Posición del transbordo en la línea de origen
+              let i3 = obtenerIndiceEnLinea(estacionCambioDestino, listaDestino), // Posición del transbordo en la línea de destino
+              let i4 = obtenerIndiceEnLinea(destinoReal, listaDestino) else { // Posición del destino en su línea
+            print("⚠️ No se pudo calcular el tramo completo con la información disponible.") // Caso raro de error
+            imprimirSeparador() // Cierra el bloque
+            return // Sale de la función
+        } // Cierra el guard múltiple
+        let tramo1 = abs(i2 - i1) // Estaciones desde el origen hasta el punto de transbordo
+        let tramo2 = abs(i4 - i3) // Estaciones desde el transbordo hasta el destino
+        print("🔄 Debes hacer transbordo: \(lineaOrigen) → \(lineaDestino).") // Mensaje principal
+        print("   Tramo 1 (\(lineaOrigen)): \(tramo1) estación(es), de \(origenReal) a \(estacionCambioOrigen).") // Primer tramo
+        print("   Tramo 2 (\(lineaDestino)): \(tramo2) estación(es), de \(estacionCambioDestino) a \(destinoReal).") // Segundo tramo
+        print("   Total aproximado: \(tramo1 + tramo2) estación(es) + 1 transbordo.") // Suma total, respuesta pedida
+    } // Cierra el if/else de líneas
+    imprimirSeparador() // Raya de cierre del bloque
+} // Fin de la función planificarViaje
+
+
 // 12. MENÚ PRINCIPAL: Bucle de interacción por consola (Requerimiento 4)
 // ----------------------------------------------------------------------------
 func menuPrincipal() { // Función que controla el ciclo del programa
