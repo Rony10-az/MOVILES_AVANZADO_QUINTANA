@@ -120,11 +120,9 @@ let conexionesEntreLineas: [String: String] = [
 ] // Fin del diccionario de conexiones
 
 // ----------------------------------------------------------------------------
-// 4. DICCIONARIO DE HORARIOS DE TRENES POR LÍNEA (NUEVO - RF-09)
+// 4. DICCIONARIO DE HORARIOS DE TRENES POR LÍNEA
 // ----------------------------------------------------------------------------
 // Horario referencial oficial (ATU / Metro de Lima), setiembre 2026.
-// Es "pre-conexión" con cada estación: cuando el usuario consulta una
-// estación, el sistema muestra el horario de LA LÍNEA a la que pertenece.
 let horariosPorLinea: [String: [String: String]] = [
     "Línea 1": [ // Horario oficial de la Línea 1 (setiembre 2026)
         "lunesAViernes": "05:00 a 22:00 (frecuencia de 3 a 10 min; cada 3 min en hora punta)", // L-V
@@ -139,7 +137,34 @@ let horariosPorLinea: [String: [String: String]] = [
 ] // Fin del diccionario de horarios (sujeto a cambios oficiales de ATU)
 
 // ----------------------------------------------------------------------------
-// 5. FUNCIONES DE FORMATO: encapsular la salida por consola (NUEVO - RF-10)
+// 5. FUNCIONES DE BÚSQUEDA FLEXIBLE (NUEVO - ya no depende de tildes exactas)
+// ----------------------------------------------------------------------------
+func normalizar(_ texto: String) -> String { // Función central: quita tildes y pasa todo a minúsculas
+    return texto.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "es_PE")) // "Línea" y "linea" quedan iguales
+} // Fin de la función normalizar
+
+func buscarNombreEstacion(_ textoIngresado: String) -> String? { // Recibe el texto escrito por el usuario
+    let textoNormalizado = normalizar(textoIngresado) // Normaliza el texto ingresado (sin tildes, minúsculas)
+    for claveEstacion in estaciones.keys { // Recorre todas las claves (nombres) del diccionario de estaciones
+        if normalizar(claveEstacion) == textoNormalizado { // Compara ignorando tildes y mayúsculas/minúsculas
+            return claveEstacion // Devuelve el nombre exacto tal como está guardado en el diccionario
+        } // Cierra el if de comparación
+    } // Cierra el for de recorrido
+    return nil // Si no se encontró ninguna coincidencia, devuelve nil
+} // Fin de la función buscarNombreEstacion
+
+func buscarNombreLinea(_ textoIngresado: String) -> String? { // Igual que buscarNombreEstacion, pero para líneas
+    let textoNormalizado = normalizar(textoIngresado) // Normaliza el texto ingresado
+    for claveLinea in lineas.keys { // Recorre las claves del diccionario de líneas ("Línea 1", "Línea 2")
+        if normalizar(claveLinea) == textoNormalizado { // Compara ignorando tildes y mayúsculas/minúsculas
+            return claveLinea // Devuelve el nombre exacto de la línea
+        } // Cierra el if
+    } // Cierra el for
+    return nil // Si no encontró coincidencia, devuelve nil
+} // Fin de la función buscarNombreLinea
+
+// ----------------------------------------------------------------------------
+// 6. FUNCIONES DE FORMATO: encapsular la salida por consola
 // ----------------------------------------------------------------------------
 func imprimirSeparador() { // Función simple que dibuja una raya divisoria
     print(String(repeating: "-", count: 60)) // Repite el guion 60 veces y lo imprime
@@ -153,27 +178,15 @@ func imprimirTitulo(_ texto: String) { // Función que imprime un título dentro
 } // Fin de la función imprimirTitulo
 
 // ----------------------------------------------------------------------------
-// 6. FUNCIÓN: Buscar el nombre real de una estación sin importar mayúsculas
-// ----------------------------------------------------------------------------
-func buscarNombreEstacion(_ textoIngresado: String) -> String? { // Recibe el texto escrito por el usuario
-    let textoNormalizado = textoIngresado.lowercased() // Convierte el texto ingresado a minúsculas
-    for claveEstacion in estaciones.keys { // Recorre todas las claves (nombres) del diccionario de estaciones
-        if claveEstacion.lowercased() == textoNormalizado { // Compara ignorando mayúsculas/minúsculas
-            return claveEstacion // Devuelve el nombre exacto tal como está guardado en el diccionario
-        } // Cierra el if de comparación
-    } // Cierra el for de recorrido
-    return nil // Si no se encontró ninguna coincidencia, devuelve nil
-} // Fin de la función buscarNombreEstacion
-
-// ----------------------------------------------------------------------------
 // 7. FUNCIÓN: Mostrar todas las estaciones de una línea (Requerimiento 1)
 // ----------------------------------------------------------------------------
-func mostrarEstacionesDeLinea(_ nombreLinea: String) { // Recibe el nombre de la línea, ej "Línea 2"
-    guard let listaEstaciones = lineas[nombreLinea] else { // Busca el array de estaciones de esa línea
-        print("⚠️ No existe información registrada para \(nombreLinea).") // Mensaje si la línea no existe
+func mostrarEstacionesDeLinea(_ nombreLinea: String) { // Recibe el nombre de la línea, ej "linea 2" (sin tilde también sirve)
+    guard let lineaReal = buscarNombreLinea(nombreLinea) else { // Normaliza y valida que la línea exista
+        print("⚠️ No existe información registrada para '\(nombreLinea)'.") // Mensaje si la línea no existe
         return // Sale de la función si no encontró la línea
     } // Cierra el guard
-    imprimirTitulo("ESTACIONES DE \(nombreLinea.uppercased()) (\(listaEstaciones.count) EN TOTAL)") // Título encuadrado
+    let listaEstaciones = lineas[lineaReal] ?? [] // Obtiene el array de estaciones de esa línea (ya con el nombre real)
+    imprimirTitulo("ESTACIONES DE \(lineaReal.uppercased()) (\(listaEstaciones.count) EN TOTAL)") // Título encuadrado
     for (indice, nombreEstacion) in listaEstaciones.enumerated() { // Recorre el array con su índice
         let detalle = estaciones[nombreEstacion] ?? [:] // Obtiene el detalle de esa estación
         let estado = detalle["estado"] ?? "Desconocido" // Extrae el estado (operativa / en construcción)
@@ -195,6 +208,7 @@ func mostrarDetalleEstacion(_ nombreEstacion: String) { // Recibe el nombre de l
     let detalle = estaciones[nombreReal] ?? [:] // Obtiene el diccionario de detalles de la estación
     let lineaDeLaEstacion = detalle["linea"] ?? "" // Guarda la línea a la que pertenece, para buscar su horario
     imprimirTitulo("DETALLE DE \(nombreReal.uppercased())") // Título encuadrado con el nombre de la estación
+    print("Distrito.......................: \(detalle["distrito"] ?? "N/D")") // Imprime el distrito donde está
     print("Línea..........................: \(detalle["linea"] ?? "N/D")") // Imprime a qué línea pertenece
     print("Estado.........................: \(detalle["estado"] ?? "N/D")") // Imprime si está operativa o en construcción
     print("Ascensor.......................: \(detalle["ascensor"] ?? "N/D")") // Imprime si tiene ascensor
@@ -213,14 +227,15 @@ func mostrarDetalleEstacion(_ nombreEstacion: String) { // Recibe el nombre de l
 } // Fin de la función mostrarDetalleEstacion
 
 // ----------------------------------------------------------------------------
-// 9. FUNCIÓN: Mostrar el horario de una línea por separado (NUEVO - RF-09)
+// 9. FUNCIÓN: Mostrar el horario de una línea por separado
 // ----------------------------------------------------------------------------
 func mostrarHorarioDeLinea(_ nombreLinea: String) { // Recibe el nombre de la línea a consultar
-    guard let horario = horariosPorLinea[nombreLinea] else { // Busca el horario de esa línea
-        print("⚠️ No hay horario registrado para \(nombreLinea).") // Mensaje si no existe esa línea
-        return // Sale de la función si no se encontró horario
+    guard let lineaReal = buscarNombreLinea(nombreLinea) else { // Normaliza y valida que la línea exista
+        print("⚠️ No existe información registrada para '\(nombreLinea)'.") // Mensaje si no existe esa línea
+        return // Sale de la función si no se encontró la línea
     } // Cierra el guard
-    imprimirTitulo("HORARIO DE \(nombreLinea.uppercased())") // Título encuadrado
+    let horario = horariosPorLinea[lineaReal] ?? [:] // Obtiene el horario de esa línea
+    imprimirTitulo("HORARIO DE \(lineaReal.uppercased())") // Título encuadrado
     print("Lunes a viernes: \(horario["lunesAViernes"] ?? "N/D")") // Imprime el horario de lunes a viernes
     print("Sábado.........: \(horario["sabado"] ?? "N/D")") // Imprime el horario de sábado
     print("Domingo........: \(horario["domingo"] ?? "N/D")") // Imprime el horario de domingo
@@ -228,7 +243,49 @@ func mostrarHorarioDeLinea(_ nombreLinea: String) { // Recibe el nombre de la l�
 } // Fin de la función mostrarHorarioDeLinea
 
 // ----------------------------------------------------------------------------
-// 10. FUNCIÓN: Sugerir la mejor línea/estación para llegar a un destino (Requerimiento 3)
+// 10. FUNCIÓN: Buscar estaciones por DISTRITO de destino (NUEVO)
+// ----------------------------------------------------------------------------
+// Resuelve el caso que planteaste: el usuario conoce el DISTRITO al que
+// quiere llegar (ej. "Surco"), no el nombre exacto de la estación.
+func buscarPorDistrito(_ distritoIngresado: String) -> [String] { // Devuelve todas las estaciones de un distrito
+    let distritoNormalizado = normalizar(distritoIngresado) // Normaliza el texto ingresado (sin tildes, minúsculas)
+    var resultado: [String] = [] // Array vacío donde se guardarán las coincidencias
+    for (nombreEstacion, detalle) in estaciones { // Recorre todas las estaciones del diccionario principal
+        let distritoEstacion = detalle["distrito"] ?? "" // Obtiene el distrito registrado de esa estación
+        if normalizar(distritoEstacion) == distritoNormalizado { // Compara ignorando tildes y mayúsculas/minúsculas
+            resultado.append(nombreEstacion) // Agrega la estación al array de resultados
+        } // Cierra el if
+    } // Cierra el for
+    return resultado // Devuelve el array con todas las estaciones encontradas (puede quedar vacío)
+} // Fin de la función buscarPorDistrito
+
+func sugerirRutaPorDistrito(origen: String, distritoDestino: String) { // Ej: origen "Villa El Salvador", distrito "Surco"
+    guard let origenReal = buscarNombreEstacion(origen) else { // Valida que el origen exista
+        print("⚠️ La estación de origen '\(origen)' no fue encontrada.") // Mensaje de error de origen
+        return // Sale de la función si el origen no existe
+    } // Cierra el guard
+    let estacionesEnDistrito = buscarPorDistrito(distritoDestino) // Busca todas las estaciones de ese distrito
+    imprimirTitulo("CÓMO LLEGAR A \(distritoDestino.uppercased()) DESDE \(origenReal.uppercased())") // Título encuadrado
+    if estacionesEnDistrito.isEmpty { // Si no hay ninguna estación registrada en ese distrito
+        print("❌ No hay ninguna estación de Línea 1 o Línea 2 registrada en el distrito '\(distritoDestino)'.") // Aviso
+        print("   Puede que ese distrito no tenga estación todavía, o el nombre esté escrito distinto al oficial.") // Sugerencia
+        imprimirSeparador() // Raya de cierre
+        return // Sale porque no hay con qué continuar
+    } // Cierra el if de distrito vacío
+    print("📍 Estaciones encontradas en \(distritoDestino):") // Encabezado del listado
+    for estacionCandidata in estacionesEnDistrito { // Recorre cada estación encontrada en el distrito
+        let lineaCandidata = estaciones[estacionCandidata]?["linea"] ?? "N/D" // Obtiene la línea de esa estación
+        print("   - \(estacionCandidata) (\(lineaCandidata))") // Imprime nombre y línea de cada candidata
+    } // Cierra el for de listado
+    imprimirSeparador() // Raya que separa el listado de la ruta sugerida
+    if let primeraOpcion = estacionesEnDistrito.first { // Toma la primera estación encontrada como destino de referencia
+        print("Tomando como referencia '\(primeraOpcion)':") // Avisa cuál estación se usará para calcular la ruta
+        sugerirRuta(origen: origenReal, destino: primeraOpcion) // Reutiliza toda la lógica ya construida en sugerirRuta
+    } // Cierra el if
+} // Fin de la función sugerirRutaPorDistrito
+
+// ----------------------------------------------------------------------------
+// 11. FUNCIÓN: Sugerir la mejor línea/estación para llegar a un destino (Requerimiento 3)
 // ----------------------------------------------------------------------------
 func sugerirRuta(origen: String, destino: String) { // Recibe estación de origen y estación de destino
     guard let origenReal = buscarNombreEstacion(origen) else { // Valida que el origen exista
@@ -243,7 +300,15 @@ func sugerirRuta(origen: String, destino: String) { // Recibe estación de orige
     let detalleDestino = estaciones[destinoReal] ?? [:] // Obtiene detalle de la estación de destino
     let lineaOrigen = detalleOrigen["linea"] ?? "" // Extrae la línea del origen
     let lineaDestino = detalleDestino["linea"] ?? "" // Extrae la línea del destino
+    let estadoOrigen = detalleOrigen["estado"] ?? "Desconocido" // Extrae el estado del origen (Operativa / En construcción)
+    let estadoDestino = detalleDestino["estado"] ?? "Desconocido" // Extrae el estado del destino
     imprimirTitulo("RUTA SUGERIDA: \(origenReal.uppercased()) → \(destinoReal.uppercased())") // Título encuadrado de la consulta
+    if estadoOrigen != "Operativa" { // FIX: avisa si la estación de origen todavía no está habilitada
+        print("⚠️ Atención: '\(origenReal)' figura como '\(estadoOrigen)', todavía NO está habilitada para viajar.") // Aviso de origen
+    } // Cierra el if de estado de origen
+    if estadoDestino != "Operativa" { // FIX: avisa si la estación de destino todavía no está habilitada
+        print("⚠️ Atención: '\(destinoReal)' figura como '\(estadoDestino)', todavía NO está habilitada para viajar.") // Aviso de destino
+    } // Cierra el if de estado de destino
     if lineaOrigen == lineaDestino { // Caso 1: ambas estaciones están en la misma línea
         print("✅ Puedes llegar directo: toma \(lineaOrigen) desde \(origenReal) hasta \(destinoReal). No necesitas transbordo.") // Ruta directa
     } else { // Caso 2: las estaciones están en líneas diferentes
@@ -259,11 +324,14 @@ func sugerirRuta(origen: String, destino: String) { // Recibe estación de orige
     if detalleDestino["metropolitano"] == "Sí" { // Verifica si el destino conecta con el Metropolitano
         print("ℹ️ Dato extra: \(destinoReal) también conecta con el Metropolitano.") // Informa la conexión adicional
     } // Cierra el if de Metropolitano
+    if estadoOrigen != "Operativa" || estadoDestino != "Operativa" { // FIX: recordatorio final si algo no está habilitado
+        print("ℹ️ Recuerda: la ruta de arriba es solo REFERENCIAL, no la podrás usar hasta que esa estación entre en operación.") // Aclaración final
+    } // Cierra el if final de advertencia
     imprimirSeparador() // Raya que cierra el bloque de la ruta sugerida
 } // Fin de la función sugerirRuta
 
 // ----------------------------------------------------------------------------
-// 11. MENÚ PRINCIPAL: Bucle de interacción por consola (Requerimiento 4)
+// 12. MENÚ PRINCIPAL: Bucle de interacción por consola (Requerimiento 4)
 // ----------------------------------------------------------------------------
 func menuPrincipal() { // Función que controla el ciclo del programa
     var continuarPrograma = true // Variable de control para mantener el programa activo
@@ -272,10 +340,11 @@ func menuPrincipal() { // Función que controla el ciclo del programa
         print("1. Ver estaciones de una línea (Línea 1 / Línea 2)") // Opción 1
         print("2. Ver detalle de una estación") // Opción 2
         print("3. Buscar la mejor ruta entre dos estaciones") // Opción 3
-        print("4. Ver horario de una línea") // Opción 4 (nueva)
-        print("5. Salir") // Opción 5 (antes era la 4)
+        print("4. Ver horario de una línea") // Opción 4
+        print("5. Buscar cómo llegar a un DISTRITO (sin saber la estación exacta)") // Opción 5 (nueva)
+        print("6. Salir") // Opción 6
         imprimirSeparador() // Raya que separa el menú de la línea de entrada
-        print("Elige una opción (1-5): ", terminator: "") // Solicita al usuario elegir una opción
+        print("Elige una opción (1-6): ", terminator: "") // Solicita al usuario elegir una opción
         let opcion = readLine() ?? "" // Lee la opción ingresada por consola (texto)
         switch opcion { // Evalúa qué opción escribió el usuario
         case "1": // Caso: consultar estaciones de una línea
@@ -283,7 +352,7 @@ func menuPrincipal() { // Función que controla el ciclo del programa
             let lineaIngresada = readLine() ?? "" // Lee el nombre de la línea ingresado
             mostrarEstacionesDeLinea(lineaIngresada) // Llama a la función que lista las estaciones
         case "2": // Caso: consultar detalle de una estación
-            print("Escribe el nombre exacto de la estación: ", terminator: "") // Pide el nombre de la estación
+            print("Escribe el nombre de la estación (no hace falta poner tildes): ", terminator: "") // Pide el nombre de la estación
             let estacionIngresada = readLine() ?? "" // Lee el nombre de la estación ingresado
             mostrarDetalleEstacion(estacionIngresada) // Llama a la función que muestra el detalle
         case "3": // Caso: buscar mejor ruta entre dos estaciones
@@ -292,11 +361,17 @@ func menuPrincipal() { // Función que controla el ciclo del programa
             print("Estación de DESTINO: ", terminator: "") // Pide la estación de destino
             let destinoIngresado = readLine() ?? "" // Lee la estación de destino
             sugerirRuta(origen: origenIngresado, destino: destinoIngresado) // Llama a la función de ruta sugerida
-        case "4": // Caso: consultar el horario de una línea (nuevo)
+        case "4": // Caso: consultar el horario de una línea
             print("¿Qué línea deseas consultar? (Línea 1 / Línea 2): ", terminator: "") // Pide el nombre de la línea
             let lineaHorario = readLine() ?? "" // Lee el nombre de la línea ingresado
             mostrarHorarioDeLinea(lineaHorario) // Llama a la función que muestra el horario
-        case "5": // Caso: salir del programa
+        case "5": // Caso: buscar ruta por distrito de destino (nuevo)
+            print("Estación de ORIGEN: ", terminator: "") // Pide la estación de origen
+            let origenDistrito = readLine() ?? "" // Lee la estación de origen
+            print("¿A qué DISTRITO quieres llegar? (ej. Surco, San Borja, Callao): ", terminator: "") // Pide el distrito destino
+            let distritoIngresado = readLine() ?? "" // Lee el distrito ingresado
+            sugerirRutaPorDistrito(origen: origenDistrito, distritoDestino: distritoIngresado) // Llama a la función de búsqueda por distrito
+        case "6": // Caso: salir del programa
             print("👋 Gracias por usar el sistema de consulta del Metro de Lima.") // Mensaje de despedida
             continuarPrograma = false // Cambia la variable de control para terminar el bucle
         default: // Caso: cualquier opción no válida
@@ -306,15 +381,17 @@ func menuPrincipal() { // Función que controla el ciclo del programa
 } // Fin de la función menuPrincipal
 
 // ----------------------------------------------------------------------------
-// 12. EJECUCIÓN DEL PROGRAMA
+// 13. EJECUCIÓN DEL PROGRAMA
 // ----------------------------------------------------------------------------
 // NOTA: readLine() funciona al ejecutar este código como "Command Line Tool"
 // en Xcode (Product > Run). Dentro de un Playground gráfico (macOS/iPad) que
 // no tenga entrada estándar disponible, reemplaza temporalmente las líneas
 // "readLine() ?? ..." por un valor fijo de prueba, por ejemplo:
-// mostrarEstacionesDeLinea("Línea 2")
-// mostrarDetalleEstacion("Estación Central")
+// mostrarEstacionesDeLinea("linea 2")                              // sin tilde, funciona igual
+// mostrarDetalleEstacion("estacion central")                       // sin tildes, funciona igual
 // mostrarHorarioDeLinea("Línea 1")
-// sugerirRuta(origen: "Gamarra", destino: "28 de Julio")
+// sugerirRuta(origen: "Gamarra", destino: "28 de Julio")            // ejemplo con transbordo
+// sugerirRuta(origen: "Vista Alegre", destino: "Villa El Salvador") // ejemplo con estación EN CONSTRUCCIÓN (debe avisar)
+// sugerirRutaPorDistrito(origen: "Villa El Salvador", distritoDestino: "Surco") // ejemplo pedido: no sé la estación, sé el distrito
 menuPrincipal() // Llama a la función principal para iniciar el programa
 
