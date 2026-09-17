@@ -5,9 +5,12 @@
 // RESTRICCIÓN: NO se usan struct ni class
 // ============================================================================
 //
-// v4 - PARTE 1/3: Planificador de viaje (cuántas estaciones faltan) +
-// referencias de ubicación en las 53 estaciones. Tarjeta y modo admin van
-// en las siguientes partes.
+// v5 - Planificador de viaje (cuántas estaciones faltan), referencias de
+// ubicación en las 53 estaciones, gestionador de tarjeta y MODO ADMINISTRADOR
+// para simular ampliaciones de la red (insertar estaciones y crear líneas).
+//
+// NOTA: los diccionarios de datos ahora son 'var' (antes 'let') porque el
+// administrador necesita agregarles información en tiempo de ejecución.
 // ============================================================================
 
 import Foundation
@@ -15,7 +18,7 @@ import Foundation
 // ----------------------------------------------------------------------------
 // 1. BASE DE DATOS: DICCIONARIO DE ESTACIONES
 // ----------------------------------------------------------------------------
-let estaciones: [String: [String: String]] = [
+var estaciones: [String: [String: String]] = [
 
     // ---------------------- LÍNEA 1 (26 estaciones, 100% operativa) ----------------------
     "Villa El Salvador": ["linea": "Línea 1", "estado": "Operativa", "ascensor": "Sí", "metropolitano": "No", "transbordo": "Ninguna", "distrito": "Villa El Salvador", "referencias": "Terminal sur de la línea, zona central de Villa El Salvador"],
@@ -78,7 +81,7 @@ let estaciones: [String: [String: String]] = [
 // ----------------------------------------------------------------------------
 // 2. ARRAYS: ORDEN FÍSICO DE LAS ESTACIONES POR LÍNEA
 // ----------------------------------------------------------------------------
-let lineas: [String: [String]] = [
+var lineas: [String: [String]] = [
     "Línea 1": [
         "Villa El Salvador", "Parque Industrial", "Pumacahua", "Villa María",
         "María Auxiliadora", "San Juan", "Atocongo", "Jorge Chávez", "Ayacucho",
@@ -100,13 +103,13 @@ let lineas: [String: [String]] = [
 // ----------------------------------------------------------------------------
 // 3. CONEXIONES ENTRE LÍNEAS
 // ----------------------------------------------------------------------------
-let conexionesEntreLineas: [String: String] = [
+var conexionesEntreLineas: [String: String] = [
     "Línea 1-Línea 2": "En Gamarra / Arriola (Línea 1) conectando con 28 de Julio (Línea 2)",
     "Línea 2-Línea 1": "En 28 de Julio (Línea 2) conectando con Gamarra / Arriola (Línea 1)"
 ]
 
 // NUEVO (Parte 1): versión estructurada para poder CONTAR estaciones en el transbordo
-let estacionesDeTransbordo: [String: [String: String]] = [
+var estacionesDeTransbordo: [String: [String: String]] = [
     "Línea 1-Línea 2": ["enEstaLinea": "Gamarra", "enLineaDestino": "28 de Julio"],
     "Línea 2-Línea 1": ["enEstaLinea": "28 de Julio", "enLineaDestino": "Gamarra"]
 ]
@@ -114,7 +117,7 @@ let estacionesDeTransbordo: [String: [String: String]] = [
 // ----------------------------------------------------------------------------
 // 4. HORARIOS DE TRENES POR LÍNEA
 // ----------------------------------------------------------------------------
-let horariosPorLinea: [String: [String: String]] = [
+var horariosPorLinea: [String: [String: String]] = [
     "Línea 1": [
         "lunesAViernes": "05:00 a 22:00 (frecuencia de 3 a 10 min; cada 3 min en hora punta)",
         "sabado": "05:00 a 22:00 (frecuencia de 3.5 a 10 min)",
@@ -451,7 +454,407 @@ func mostrarEstadoTarjeta() { // Resumen: cuánto tienes, cuánto consumiste, hi
 }
 
 // ----------------------------------------------------------------------------
-// 13. MENÚ PRINCIPAL (con la nueva opción 6, "Salir" ahora es 7)
+// 13. NUEVO: MODO ADMINISTRADOR (simulación de ampliaciones de la red)
+// ----------------------------------------------------------------------------
+// El administrador puede AGREGAR datos al sistema para simular cómo quedaría la
+// red del Metro de Lima si creciera:
+//   a) Insertar una estación NUEVA entre dos paraderos que ya existen.
+//   b) Ampliar una línea agregando una estación al final (nuevo terminal).
+//   c) Crear una LÍNEA NUEVA simulada con sus estaciones y su horario.
+//   d) Registrar el transbordo entre dos líneas para que el planificador funcione.
+// Todo se guarda en los MISMOS diccionarios y arrays del sistema (sin struct ni class).
+
+let claveAdministrador = "metro2026" // Clave simulada de acceso al modo administrador
+var modoAdministradorActivo = false // Indica si la sesión de administrador está abierta
+var bitacoraAdministrador: [String] = [] // Guarda un texto por cada cambio hecho
+
+// Registra en la bitácora cada cambio, para poder mostrar después qué se simuló
+func registrarEnBitacora(_ accion: String) {
+    bitacoraAdministrador.append(accion)
+}
+
+// Quita espacios sobrantes del texto que escribe el usuario en consola
+func limpiarTexto(_ texto: String) -> String {
+    return texto.trimmingCharacters(in: .whitespacesAndNewlines)
+}
+
+// Valida la clave y abre la sesión de administrador
+func iniciarSesionAdministrador(_ claveIngresada: String) -> Bool {
+    if limpiarTexto(claveIngresada) == claveAdministrador {
+        modoAdministradorActivo = true
+        print("🔐 Acceso concedido. Modo ADMINISTRADOR activado.")
+        return true
+    }
+    print("⛔ Clave incorrecta. El modo administrador NO fue activado.")
+    return false
+}
+
+// Cierra la sesión para que un usuario normal no pueda seguir editando datos
+func cerrarSesionAdministrador() {
+    modoAdministradorActivo = false
+    print("🔓 Sesión de administrador cerrada.")
+}
+
+// Verifica el permiso antes de cualquier cambio en la base de datos
+func hayPermisoDeAdministrador() -> Bool {
+    if !modoAdministradorActivo {
+        print("⛔ Esta acción es solo para el administrador. Inicia sesión primero.")
+        return false
+    }
+    return true
+}
+
+// Guarda (o reemplaza) el detalle completo de una estación en el diccionario
+func guardarDatosDeEstacion(nombre: String, linea: String, estado: String, ascensor: String,
+                            metropolitano: String, transbordo: String, distrito: String,
+                            referencias: String) {
+    estaciones[nombre] = [
+        "linea": linea,
+        "estado": estado,
+        "ascensor": ascensor,
+        "metropolitano": metropolitano,
+        "transbordo": transbordo,
+        "distrito": distrito,
+        "referencias": referencias
+    ]
+}
+
+// ---- a) INSERTAR UNA ESTACIÓN ENTRE DOS PARADEROS EXISTENTES ----------------
+func insertarEstacionEntre(estacionA: String, estacionB: String, nuevaEstacion: String,
+                           distrito: String, referencias: String,
+                           estado: String = "Simulada", ascensor: String = "No",
+                           metropolitano: String = "No") {
+    if !hayPermisoDeAdministrador() { return }
+    let nombreNueva = limpiarTexto(nuevaEstacion)
+    if nombreNueva.isEmpty {
+        print("⚠️ El nombre de la estación nueva no puede estar vacío.")
+        return
+    }
+    guard let nombreA = buscarNombreEstacion(estacionA) else {
+        print("⚠️ El paradero '\(estacionA)' no existe en el sistema.")
+        return
+    }
+    guard let nombreB = buscarNombreEstacion(estacionB) else {
+        print("⚠️ El paradero '\(estacionB)' no existe en el sistema.")
+        return
+    }
+    if buscarNombreEstacion(nombreNueva) != nil {
+        print("⚠️ Ya existe una estación llamada '\(nombreNueva)'. Usa otro nombre.")
+        return
+    }
+    let lineaA = estaciones[nombreA]?["linea"] ?? ""
+    let lineaB = estaciones[nombreB]?["linea"] ?? ""
+    if lineaA != lineaB {
+        print("⚠️ '\(nombreA)' es de \(lineaA) y '\(nombreB)' es de \(lineaB).")
+        print("   Solo se puede insertar una estación entre dos paraderos de la MISMA línea.")
+        return
+    }
+    var recorrido = lineas[lineaA] ?? []
+    guard let indiceA = obtenerIndiceEnLinea(nombreA, recorrido),
+          let indiceB = obtenerIndiceEnLinea(nombreB, recorrido) else {
+        print("⚠️ No se pudo ubicar alguno de los paraderos dentro de \(lineaA).")
+        return
+    }
+    if abs(indiceA - indiceB) != 1 {
+        print("⚠️ '\(nombreA)' y '\(nombreB)' NO son paraderos consecutivos.")
+        print("   Entre ellos hay \(abs(indiceA - indiceB) - 1) estación(es); elige dos que estén seguidas.")
+        return
+    }
+    let posicionDeInsercion = max(indiceA, indiceB) // La nueva queda justo entre las dos
+    recorrido.insert(nombreNueva, at: posicionDeInsercion)
+    lineas[lineaA] = recorrido // Se actualiza el recorrido real de la línea
+    guardarDatosDeEstacion(nombre: nombreNueva, linea: lineaA, estado: estado,
+                           ascensor: ascensor, metropolitano: metropolitano,
+                           transbordo: "Ninguna",
+                           distrito: limpiarTexto(distrito),
+                           referencias: limpiarTexto(referencias))
+    imprimirTitulo("ESTACIÓN INSERTADA: \(nombreNueva.uppercased())")
+    print("✅ '\(nombreNueva)' quedó registrada en \(lineaA), entre \(nombreA) y \(nombreB).")
+    print("   Posición en el recorrido: \(posicionDeInsercion + 1) de \(recorrido.count).")
+    print("   Estado registrado........: \(estado)")
+    print("🗺️  Nuevo recorrido: " + recorrido.joined(separator: " → "))
+    imprimirSeparador()
+    registrarEnBitacora("Insertó '\(nombreNueva)' en \(lineaA), entre \(nombreA) y \(nombreB)")
+}
+
+// ---- b) AMPLIAR UNA LÍNEA: NUEVA ESTACIÓN AL FINAL --------------------------
+func agregarEstacionAlFinalDeLinea(nombreLinea: String, nuevaEstacion: String,
+                                   distrito: String, referencias: String,
+                                   alInicio: Bool = false, estado: String = "Simulada") {
+    if !hayPermisoDeAdministrador() { return }
+    guard let lineaReal = buscarNombreLinea(nombreLinea) else {
+        print("⚠️ No existe la línea '\(nombreLinea)'.")
+        return
+    }
+    let nombreNueva = limpiarTexto(nuevaEstacion)
+    if nombreNueva.isEmpty {
+        print("⚠️ El nombre de la estación nueva no puede estar vacío.")
+        return
+    }
+    if buscarNombreEstacion(nombreNueva) != nil {
+        print("⚠️ Ya existe una estación llamada '\(nombreNueva)'. Usa otro nombre.")
+        return
+    }
+    var recorrido = lineas[lineaReal] ?? []
+    if alInicio {
+        recorrido.insert(nombreNueva, at: 0) // Nuevo terminal al inicio del recorrido
+    } else {
+        recorrido.append(nombreNueva) // Nuevo terminal al final del recorrido
+    }
+    lineas[lineaReal] = recorrido
+    guardarDatosDeEstacion(nombre: nombreNueva, linea: lineaReal, estado: estado,
+                           ascensor: "No", metropolitano: "No", transbordo: "Ninguna",
+                           distrito: limpiarTexto(distrito),
+                           referencias: limpiarTexto(referencias))
+    let extremo = alInicio ? "INICIO" : "FINAL"
+    imprimirTitulo("AMPLIACIÓN DE \(lineaReal.uppercased())")
+    print("✅ '\(nombreNueva)' se agregó al \(extremo) de \(lineaReal) (estado: \(estado)).")
+    print("   La línea ahora tiene \(recorrido.count) estación(es).")
+    print("🗺️  Nuevo recorrido: " + recorrido.joined(separator: " → "))
+    imprimirSeparador()
+    registrarEnBitacora("Amplió \(lineaReal) con '\(nombreNueva)' al \(extremo.lowercased())")
+}
+
+// ---- c) CREAR UNA NUEVA LÍNEA SIMULADA -------------------------------------
+// 'estacionesNuevas' es un ARRAY DE DICCIONARIOS: cada uno con "nombre", "distrito"
+// y "referencias". Así se evita usar struct o class para agrupar los datos.
+func crearLineaSimulada(nombreLinea: String, estacionesNuevas: [[String: String]],
+                        horarioLunesAViernes: String, horarioSabado: String,
+                        horarioDomingo: String) {
+    if !hayPermisoDeAdministrador() { return }
+    let lineaLimpia = limpiarTexto(nombreLinea)
+    if lineaLimpia.isEmpty {
+        print("⚠️ El nombre de la línea no puede estar vacío.")
+        return
+    }
+    if buscarNombreLinea(lineaLimpia) != nil {
+        print("⚠️ La línea '\(lineaLimpia)' ya existe en el sistema.")
+        return
+    }
+    if estacionesNuevas.count < 2 {
+        print("⚠️ Una línea necesita al menos 2 estaciones para poder simular viajes.")
+        return
+    }
+    var recorrido: [String] = [] // Aquí se arma el orden físico de la línea nueva
+    var descartadas: [String] = [] // Nombres repetidos que no se pudieron registrar
+    for datosEstacion in estacionesNuevas {
+        let nombre = limpiarTexto(datosEstacion["nombre"] ?? "")
+        if nombre.isEmpty { continue }
+        if buscarNombreEstacion(nombre) != nil {
+            descartadas.append(nombre) // Ya pertenece a otra línea: no se sobreescribe
+            continue
+        }
+        recorrido.append(nombre)
+        guardarDatosDeEstacion(nombre: nombre, linea: lineaLimpia, estado: "Simulada",
+                               ascensor: datosEstacion["ascensor"] ?? "No",
+                               metropolitano: datosEstacion["metropolitano"] ?? "No",
+                               transbordo: "Ninguna",
+                               distrito: limpiarTexto(datosEstacion["distrito"] ?? "N/D"),
+                               referencias: limpiarTexto(datosEstacion["referencias"] ?? "Estación simulada por el administrador"))
+    }
+    if recorrido.count < 2 {
+        print("❌ No se pudo crear '\(lineaLimpia)': quedaron menos de 2 estaciones válidas.")
+        for nombreDescartado in recorrido { estaciones[nombreDescartado] = nil } // Deshace lo agregado
+        return
+    }
+    lineas[lineaLimpia] = recorrido // Se registra el recorrido de la línea nueva
+    horariosPorLinea[lineaLimpia] = [ // Se registra su horario referencial
+        "lunesAViernes": limpiarTexto(horarioLunesAViernes),
+        "sabado": limpiarTexto(horarioSabado),
+        "domingo": limpiarTexto(horarioDomingo)
+    ]
+    imprimirTitulo("NUEVA LÍNEA SIMULADA: \(lineaLimpia.uppercased())")
+    print("✅ Se creó \(lineaLimpia) con \(recorrido.count) estación(es) en estado 'Simulada'.")
+    for (indice, nombreEstacion) in recorrido.enumerated() {
+        let distritoEstacion = estaciones[nombreEstacion]?["distrito"] ?? "N/D"
+        print("  \(indice + 1). \(nombreEstacion) - \(distritoEstacion)")
+    }
+    print("🗺️  Recorrido: " + recorrido.joined(separator: " → "))
+    if !descartadas.isEmpty {
+        print("⚠️ No se agregaron (ya existían en otra línea): " + descartadas.joined(separator: ", "))
+    }
+    imprimirSeparador()
+    print("ℹ️ Recuerda registrar un TRANSBORDO (opción 4) para conectarla con otra línea.")
+    imprimirSeparador()
+    registrarEnBitacora("Creó la línea simulada '\(lineaLimpia)' con \(recorrido.count) estaciones")
+}
+
+// ---- d) REGISTRAR TRANSBORDO ENTRE DOS LÍNEAS ------------------------------
+// Sin esto, el planificador no sabe por dónde cambiar de una línea a otra.
+func registrarTransbordoEntreLineas(lineaA: String, estacionA: String,
+                                    lineaB: String, estacionB: String) {
+    if !hayPermisoDeAdministrador() { return }
+    guard let nombreLineaA = buscarNombreLinea(lineaA) else {
+        print("⚠️ No existe la línea '\(lineaA)'.")
+        return
+    }
+    guard let nombreLineaB = buscarNombreLinea(lineaB) else {
+        print("⚠️ No existe la línea '\(lineaB)'.")
+        return
+    }
+    if nombreLineaA == nombreLineaB {
+        print("⚠️ El transbordo debe ser entre DOS líneas diferentes.")
+        return
+    }
+    guard let nombreEstacionA = buscarNombreEstacion(estacionA) else {
+        print("⚠️ La estación '\(estacionA)' no existe.")
+        return
+    }
+    guard let nombreEstacionB = buscarNombreEstacion(estacionB) else {
+        print("⚠️ La estación '\(estacionB)' no existe.")
+        return
+    }
+    if estaciones[nombreEstacionA]?["linea"] != nombreLineaA {
+        print("⚠️ '\(nombreEstacionA)' no pertenece a \(nombreLineaA).")
+        return
+    }
+    if estaciones[nombreEstacionB]?["linea"] != nombreLineaB {
+        print("⚠️ '\(nombreEstacionB)' no pertenece a \(nombreLineaB).")
+        return
+    }
+    let claveIda = "\(nombreLineaA)-\(nombreLineaB)" // Clave de ida (A → B)
+    let claveVuelta = "\(nombreLineaB)-\(nombreLineaA)" // Clave de vuelta (B → A)
+    conexionesEntreLineas[claveIda] = "En \(nombreEstacionA) (\(nombreLineaA)) conectando con \(nombreEstacionB) (\(nombreLineaB))"
+    conexionesEntreLineas[claveVuelta] = "En \(nombreEstacionB) (\(nombreLineaB)) conectando con \(nombreEstacionA) (\(nombreLineaA))"
+    estacionesDeTransbordo[claveIda] = ["enEstaLinea": nombreEstacionA, "enLineaDestino": nombreEstacionB]
+    estacionesDeTransbordo[claveVuelta] = ["enEstaLinea": nombreEstacionB, "enLineaDestino": nombreEstacionA]
+    estaciones[nombreEstacionA]?["transbordo"] = "\(nombreLineaB) (en \(nombreEstacionB))"
+    estaciones[nombreEstacionB]?["transbordo"] = "\(nombreLineaA) (en \(nombreEstacionA))"
+    imprimirTitulo("TRANSBORDO REGISTRADO")
+    print("✅ \(nombreLineaA) ↔ \(nombreLineaB)")
+    print("   \(nombreEstacionA) (\(nombreLineaA))  ⇄  \(nombreEstacionB) (\(nombreLineaB))")
+    print("   Ya puedes usar el planificador entre estaciones de ambas líneas.")
+    imprimirSeparador()
+    registrarEnBitacora("Conectó \(nombreLineaA) y \(nombreLineaB) vía \(nombreEstacionA) ⇄ \(nombreEstacionB)")
+}
+
+// ---- BITÁCORA: RESUMEN DE TODO LO QUE SE SIMULÓ -----------------------------
+func mostrarBitacoraAdministrador() {
+    imprimirTitulo("BITÁCORA DE CAMBIOS DEL ADMINISTRADOR")
+    if bitacoraAdministrador.isEmpty {
+        print("Todavía no se registran cambios en esta sesión.")
+    } else {
+        for (indice, accion) in bitacoraAdministrador.enumerated() {
+            print("  \(indice + 1). \(accion)")
+        }
+    }
+    imprimirSeparador()
+    print("Resumen actual de la red:")
+    for (nombreLinea, recorrido) in lineas {
+        print("   - \(nombreLinea): \(recorrido.count) estación(es)")
+    }
+    print("   - Total de estaciones registradas: \(estaciones.count)")
+    imprimirSeparador()
+}
+
+// ---- MENÚ DEL ADMINISTRADOR -------------------------------------------------
+func menuAdministrador() {
+    if !modoAdministradorActivo { // Pide la clave solo si la sesión no está abierta
+        print("🔐 Ingresa la clave de administrador: ", terminator: "")
+        let claveIngresada = readLine() ?? ""
+        if !iniciarSesionAdministrador(claveIngresada) { return }
+    }
+    var seguirEnAdmin = true
+    while seguirEnAdmin {
+        imprimirTitulo("MODO ADMINISTRADOR - SIMULACIÓN DE LA RED")
+        print("1. Insertar una estación ENTRE dos paraderos existentes")
+        print("2. Ampliar una línea (agregar estación al inicio o al final)")
+        print("3. Crear una NUEVA línea simulada")
+        print("4. Registrar transbordo entre dos líneas")
+        print("5. Ver bitácora de cambios")
+        print("6. Cerrar sesión y volver al menú principal")
+        imprimirSeparador()
+        print("Elige una opción (1-6): ", terminator: "")
+        let opcionAdmin = readLine() ?? ""
+        switch opcionAdmin {
+        case "1":
+            print("Primer paradero existente: ", terminator: "")
+            let paraderoA = readLine() ?? ""
+            print("Segundo paradero existente (debe ir seguido del primero): ", terminator: "")
+            let paraderoB = readLine() ?? ""
+            print("Nombre de la NUEVA estación: ", terminator: "")
+            let nombreNuevo = readLine() ?? ""
+            print("Distrito de la nueva estación: ", terminator: "")
+            let distritoNuevo = readLine() ?? ""
+            print("Referencia de ubicación: ", terminator: "")
+            let referenciaNueva = readLine() ?? ""
+            insertarEstacionEntre(estacionA: paraderoA, estacionB: paraderoB,
+                                  nuevaEstacion: nombreNuevo, distrito: distritoNuevo,
+                                  referencias: referenciaNueva)
+        case "2":
+            print("¿Qué línea quieres ampliar? (Línea 1 / Línea 2 / otra): ", terminator: "")
+            let lineaAmpliar = readLine() ?? ""
+            print("Nombre de la NUEVA estación: ", terminator: "")
+            let nombreAmpliacion = readLine() ?? ""
+            print("Distrito: ", terminator: "")
+            let distritoAmpliacion = readLine() ?? ""
+            print("Referencia de ubicación: ", terminator: "")
+            let referenciaAmpliacion = readLine() ?? ""
+            print("¿Va al INICIO del recorrido? (s/n): ", terminator: "")
+            let respuestaInicio = readLine() ?? ""
+            agregarEstacionAlFinalDeLinea(nombreLinea: lineaAmpliar,
+                                          nuevaEstacion: nombreAmpliacion,
+                                          distrito: distritoAmpliacion,
+                                          referencias: referenciaAmpliacion,
+                                          alInicio: respuestaInicio.lowercased() == "s")
+        case "3":
+            print("Nombre de la nueva línea (ej. Línea 3): ", terminator: "")
+            let nombreLineaNueva = readLine() ?? ""
+            var estacionesCargadas: [[String: String]] = [] // Array de diccionarios
+            var seguirCargando = true
+            print("Escribe las estaciones EN ORDEN. Escribe 'fin' para terminar.")
+            while seguirCargando {
+                print("Estación #\(estacionesCargadas.count + 1) (o 'fin'): ", terminator: "")
+                let nombreEstacionNueva = limpiarTexto(readLine() ?? "")
+                if normalizar(nombreEstacionNueva) == "fin" || nombreEstacionNueva.isEmpty {
+                    seguirCargando = false
+                } else {
+                    print("   Distrito de \(nombreEstacionNueva): ", terminator: "")
+                    let distritoEstacionNueva = readLine() ?? ""
+                    print("   Referencia de ubicación: ", terminator: "")
+                    let referenciaEstacionNueva = readLine() ?? ""
+                    estacionesCargadas.append([
+                        "nombre": nombreEstacionNueva,
+                        "distrito": distritoEstacionNueva,
+                        "referencias": referenciaEstacionNueva
+                    ])
+                }
+            }
+            print("Horario de lunes a viernes: ", terminator: "")
+            let horarioSemana = readLine() ?? "Por definir"
+            print("Horario de sábado: ", terminator: "")
+            let horarioSabado = readLine() ?? "Por definir"
+            print("Horario de domingo: ", terminator: "")
+            let horarioDomingo = readLine() ?? "Por definir"
+            crearLineaSimulada(nombreLinea: nombreLineaNueva,
+                               estacionesNuevas: estacionesCargadas,
+                               horarioLunesAViernes: horarioSemana,
+                               horarioSabado: horarioSabado,
+                               horarioDomingo: horarioDomingo)
+        case "4":
+            print("Primera línea: ", terminator: "")
+            let primeraLinea = readLine() ?? ""
+            print("Estación de transbordo en esa línea: ", terminator: "")
+            let primeraEstacion = readLine() ?? ""
+            print("Segunda línea: ", terminator: "")
+            let segundaLinea = readLine() ?? ""
+            print("Estación de transbordo en la segunda línea: ", terminator: "")
+            let segundaEstacion = readLine() ?? ""
+            registrarTransbordoEntreLineas(lineaA: primeraLinea, estacionA: primeraEstacion,
+                                           lineaB: segundaLinea, estacionB: segundaEstacion)
+        case "5":
+            mostrarBitacoraAdministrador()
+        case "6":
+            cerrarSesionAdministrador()
+            seguirEnAdmin = false
+        default:
+            print("⚠️ Opción no válida, intenta nuevamente.")
+        }
+    }
+}
+
+// ----------------------------------------------------------------------------
+// 14. MENÚ PRINCIPAL (con la nueva opción 8 de administrador; "Salir" ahora es 9)
 // ----------------------------------------------------------------------------
 func menuPrincipal() {
     var continuarPrograma = true
@@ -464,9 +867,10 @@ func menuPrincipal() {
         print("5. Buscar cómo llegar a un distrito")
         print("6. Planificador de viaje (cuántas estaciones faltan)")
         print("7. Gestionar mi tarjeta (saldo / recarga / pagar pasaje)")
-        print("8. Salir")
+        print("8. Modo administrador (agregar estaciones / crear líneas simuladas) 🔐")
+        print("9. Salir")
         imprimirSeparador()
-        print("Elige una opción (1-7): ", terminator: "")
+        print("Elige una opción (1-9): ", terminator: "")
         let opcion = readLine() ?? ""
         switch opcion {
         case "1":
@@ -516,6 +920,8 @@ func menuPrincipal() {
                 print("⚠️ Opción no válida.")
             }
         case "8":
+            menuAdministrador()
+        case "9":
             print("👋 Gracias por usar el sistema de consulta del Metro de Lima.")
             continuarPrograma = false
         default:
@@ -525,9 +931,15 @@ func menuPrincipal() {
 }
 
 // ----------------------------------------------------------------------------
-// 14. EJECUCIÓN
+// 15. EJECUCIÓN
 // ----------------------------------------------------------------------------
 // Para probar sin readLine(), descomenta y usa directo, por ejemplo:
 // planificarViaje(origen: "Villa El Salvador", destino: "Jorge Chávez")
 // planificarViaje(origen: "Villa El Salvador", destino: "28 de Julio")
+//
+// Prueba del modo administrador sin menú (primero hay que iniciar sesión):
+// _ = iniciarSesionAdministrador("metro2026")
+// insertarEstacionEntre(estacionA: "Angamos", estacionB: "San Borja Sur",
+//                       nuevaEstacion: "Canadá", distrito: "San Borja",
+//                       referencias: "Cruce de Av. Canadá con Av. Aviación")
 menuPrincipal()
