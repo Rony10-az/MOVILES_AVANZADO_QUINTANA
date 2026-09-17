@@ -398,6 +398,57 @@ func planificarViaje(origen: String, destino: String) {
     }
     imprimirSeparador()
 }
+// ----------------------------------------------------------------------------
+// VARIABLES DE LA TARJETA SIMULADA (tarifas reales Línea 1, 2026)
+// ----------------------------------------------------------------------------
+var saldoTarjeta: Double = 0.0 // Saldo actual (arranca en S/ 0.00, hay que recargar)
+var totalConsumido: Double = 0.0 // Acumulado histórico de lo gastado en pasajes
+var historialDeViajes: [String] = [] // Un texto por cada viaje pagado
+let costoPasajeAdulto: Double = 1.50 // Tarifa adulto real (2026)
+let costoPasajeEstudiante: Double = 0.75 // Tarifa estudiante real, L-S (2026)
+
+// ----------------------------------------------------------------------------
+// FUNCIONES DEL GESTIONADOR DE TARJETA
+// ----------------------------------------------------------------------------
+func recargarTarjeta(monto: Double) { // Recibe el monto a recargar
+    if monto < 0.10 { // Recarga mínima real
+        print("⚠️ El monto mínimo de recarga es S/ 0.10.")
+        return
+    }
+    saldoTarjeta += monto
+    print("✅ Recarga exitosa de S/ \(String(format: "%.2f", monto)). Saldo actual: S/ \(String(format: "%.2f", saldoTarjeta))")
+}
+
+func pagarPasaje(esEstudiante: Bool, trayecto: String) -> Bool { // Devuelve true si se pudo cobrar
+    let costo = esEstudiante ? costoPasajeEstudiante : costoPasajeAdulto
+    if saldoTarjeta >= costo {
+        saldoTarjeta -= costo
+        totalConsumido += costo
+        historialDeViajes.append(trayecto)
+        print("✅ Pasaje pagado: S/ \(String(format: "%.2f", costo)). Saldo restante: S/ \(String(format: "%.2f", saldoTarjeta))")
+        return true
+    } else {
+        print("❌ Saldo insuficiente. Tienes S/ \(String(format: "%.2f", saldoTarjeta)), necesitas S/ \(String(format: "%.2f", costo)). Recarga tu tarjeta.")
+        return false
+    }
+}
+
+func mostrarEstadoTarjeta() { // Resumen: cuánto tienes, cuánto consumiste, historial
+    imprimirTitulo("ESTADO DE TU TARJETA")
+    print("Saldo actual.......: S/ \(String(format: "%.2f", saldoTarjeta))")
+    print("Total consumido....: S/ \(String(format: "%.2f", totalConsumido))")
+    print("Viajes realizados..: \(historialDeViajes.count)")
+    imprimirSeparador()
+    if historialDeViajes.isEmpty {
+        print("Aún no registras viajes pagados con la tarjeta.")
+    } else {
+        print("Historial de viajes:")
+        for (indice, viaje) in historialDeViajes.enumerated() {
+            print("  \(indice + 1). \(viaje)")
+        }
+    }
+    imprimirSeparador()
+}
 
 // ----------------------------------------------------------------------------
 // 13. MENÚ PRINCIPAL (con la nueva opción 6, "Salir" ahora es 7)
@@ -412,7 +463,8 @@ func menuPrincipal() {
         print("4. Ver horario de una línea")
         print("5. Buscar cómo llegar a un distrito")
         print("6. Planificador de viaje (cuántas estaciones faltan)")
-        print("7. Salir")
+        print("7. Gestionar mi tarjeta (saldo / recarga / pagar pasaje)")
+        print("8. Salir")
         imprimirSeparador()
         print("Elige una opción (1-7): ", terminator: "")
         let opcion = readLine() ?? ""
@@ -448,6 +500,22 @@ func menuPrincipal() {
             let destinoPlan = readLine() ?? ""
             planificarViaje(origen: origenPlan, destino: destinoPlan)
         case "7":
+            print("a. Ver saldo   b. Recargar   c. Pagar pasaje: ", terminator: "")
+            let opcionTarjeta = readLine() ?? ""
+            if opcionTarjeta == "a" {
+                mostrarEstadoTarjeta()
+            } else if opcionTarjeta == "b" {
+                print("¿Cuánto quieres recargar (S/)? ", terminator: "")
+                let montoTexto = readLine() ?? ""
+                recargarTarjeta(monto: Double(montoTexto) ?? 0.0)
+            } else if opcionTarjeta == "c" {
+                print("¿Eres estudiante? (s/n): ", terminator: "")
+                let esEstudianteTexto = readLine() ?? ""
+                _ = pagarPasaje(esEstudiante: esEstudianteTexto.lowercased() == "s", trayecto: "Viaje simulado")
+            } else {
+                print("⚠️ Opción no válida.")
+            }
+        case "8":
             print("👋 Gracias por usar el sistema de consulta del Metro de Lima.")
             continuarPrograma = false
         default:
