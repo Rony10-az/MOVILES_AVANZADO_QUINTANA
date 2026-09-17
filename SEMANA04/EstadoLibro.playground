@@ -1,0 +1,13 @@
+//
+//  EstadoLibro.swift
+//  
+//
+//  Created by Rony Jhostin on 17/09/26.
+//
+
+
+Hola, seguimos con un nuevo apartado . 
+Soy estudiante de diseno y desarrollo de software , estoy cursando  mi 5to ciclo .En este nuevo ciclo estoy viendo el lenguaje swift en el sistema opertativo IOS por lo cual uso la herramineta de Xcode e aqui usamos playground.
+Vamos a realizar un nuevo sistema que trata de una biblioteca con enum EstadoLibro, struct Libro y class Biblioteca con metodos prestar devolver e inventario.
+Solo usaremos lo aprendido que son struct, class, herencia, protocolos, enums, arrays, bucles y funciones . Sin optionals ni guard let, sin firstIndex(where), sin didset sin propiedades calculada , sin genericos.
+Solo el codigo swift , con las firmas exactas que te indico .
