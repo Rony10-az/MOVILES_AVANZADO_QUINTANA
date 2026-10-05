@@ -1,0 +1,226 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FFF212817AA968DB2E172EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7E2E0DEDEE7A7235BA0D71 /* AppDelegate.swift */; };
+		8F97E0B6485ADC6AD846956A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840023BE1C61D6F26AD91C64 /* SceneDelegate.swift */; };
+		F04F6EE9602454525EBAFCC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7872B3FA2881AE1289E72F /* ViewController.swift */; };
+		760B5012C0A58D5CCA96C5CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C59B34F7CE6F99F11CE2A0EB /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1E7E2E0DEDEE7A7235BA0D71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		840023BE1C61D6F26AD91C64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4D7872B3FA2881AE1289E72F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C59B34F7CE6F99F11CE2A0EB /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		29352AF1F144EB62017282FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		295B3223130FCDC0B79A5B21 /* Calculadora_Prestamos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculadora_Prestamos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5D52CA641759B017494F4DE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9E2F0F5984E771D2C426DFD7 = {
+			isa = PBXGroup;
+			children = (
+				78FBE6C98C75E30AA455A4C4 /* Calculadora_Prestamos */,
+				03F23D3141ABE3A6237A95C9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		78FBE6C98C75E30AA455A4C4 /* Calculadora_Prestamos */ = {
+			isa = PBXGroup;
+			children = (
+				1E7E2E0DEDEE7A7235BA0D71 /* AppDelegate.swift */,
+				840023BE1C61D6F26AD91C64 /* SceneDelegate.swift */,
+				4D7872B3FA2881AE1289E72F /* ViewController.swift */,
+				C59B34F7CE6F99F11CE2A0EB /* Main.storyboard */,
+				29352AF1F144EB62017282FC /* Info.plist */,
+			);
+			path = Calculadora_Prestamos;
+			sourceTree = "<group>";
+		};
+		03F23D3141ABE3A6237A95C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				295B3223130FCDC0B79A5B21 /* Calculadora_Prestamos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4305CB39AF71616383C133D /* Calculadora_Prestamos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D3994C42E117F8E7908A7A1 /* Build configuration list for PBXNativeTarget "Calculadora_Prestamos" */;
+			buildPhases = (
+				AC2399E2FDFB172941B18B44 /* Sources */,
+				3DFA6DEC27CC713D6AE2ECA7 /* Resources */,
+				5D52CA641759B017494F4DE3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Calculadora_Prestamos;
+			productName = Calculadora_Prestamos;
+			productReference = 295B3223130FCDC0B79A5B21 /* Calculadora_Prestamos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0013566C5702DED6DC5CB4D9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					F4305CB39AF71616383C133D = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 49F53C092049AAF623AD9603 /* Build configuration list for PBXProject "Calculadora_Prestamos" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9E2F0F5984E771D2C426DFD7;
+			productRefGroup = 03F23D3141ABE3A6237A95C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4305CB39AF71616383C133D /* Calculadora_Prestamos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3DFA6DEC27CC713D6AE2ECA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				760B5012C0A58D5CCA96C5CF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC2399E2FDFB172941B18B44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FFF212817AA968DB2E172EF /* AppDelegate.swift in Sources */,
+				8F97E0B6485ADC6AD846956A /* SceneDelegate.swift in Sources */,
+				F04F6EE9602454525EBAFCC2 /* ViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8BB4E62DA76846C748853A85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		EDB361633A35FFC114EF6BA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		0BB9E0325D0E04A81B15B548 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Calculadora_Prestamos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.pe.tecsup.pma.Calculadora-Prestamos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		6A796AAEFBFCF5181D5CCBA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Calculadora_Prestamos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.pe.tecsup.pma.Calculadora-Prestamos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		49F53C092049AAF623AD9603 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BB4E62DA76846C748853A85 /* Debug */,
+				EDB361633A35FFC114EF6BA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D3994C42E117F8E7908A7A1 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BB9E0325D0E04A81B15B548 /* Debug */,
+				6A796AAEFBFCF5181D5CCBA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0013566C5702DED6DC5CB4D9 /* Project object */;
+}
