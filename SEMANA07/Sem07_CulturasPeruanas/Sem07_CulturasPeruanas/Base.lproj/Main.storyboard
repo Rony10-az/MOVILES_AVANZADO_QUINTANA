@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Lista Culturas-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="80" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qLq-bT-wDa">
+                                <rect key="frame" x="0.0" y="20" width="375" height="627"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="celda" rowHeight="80" id="eQT-ig-g6c" customClass="CulturaTableViewCell" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eQT-ig-g6c" id="eQV-7A-dlu">
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="celda-img">
+                                                    <rect key="frame" x="12" y="10" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="celda-img-w"/>
+                                                        <constraint firstAttribute="height" constant="60" id="celda-img-h"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="celda-label">
+                                                    <rect key="frame" x="84" y="24.5" width="248" height="31"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="celda-img" firstAttribute="leading" secondItem="eQV-7A-dlu" secondAttribute="leading" constant="12" id="celda-c1"/>
+                                                <constraint firstItem="celda-img" firstAttribute="centerY" secondItem="eQV-7A-dlu" secondAttribute="centerY" id="celda-c2"/>
+                                                <constraint firstItem="celda-label" firstAttribute="leading" secondItem="celda-img" secondAttribute="trailing" constant="12" id="celda-c3"/>
+                                                <constraint firstItem="celda-label" firstAttribute="trailing" secondItem="eQV-7A-dlu" secondAttribute="trailing" constant="-12" id="celda-c4"/>
+                                                <constraint firstItem="celda-label" firstAttribute="centerY" secondItem="eQV-7A-dlu" secondAttribute="centerY" id="celda-c5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fotoCultura" destination="celda-img" id="celda-con1"/>
+                                            <outlet property="nombreCultura" destination="celda-label" id="celda-con2"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="heP-0G-98k"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="J1O-hD-hmX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <constraints>
+                            <constraint firstItem="qLq-bT-wDa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="c1l-aa-001"/>
+                            <constraint firstItem="qLq-bT-wDa" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="c1l-aa-002"/>
+                            <constraint firstItem="qLq-bT-wDa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="c1l-aa-003"/>
+                            <constraint firstItem="qLq-bT-wDa" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="c1l-aa-004"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="DTL-01-vc1" kind="show" identifier="irADetalle" id="seg-ir-detalle"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-370" y="137"/>
+        </scene>
+        <!--Detalle Cultura-->
+        <scene sceneID="dtl-sc-ene1">
+            <objects>
+                <viewController id="DTL-01-vc1" customClass="DetalleViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DTL-01-view">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-img">
+                                <rect key="frame" x="20" y="20" width="335" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="DTL-img-h"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-nombre">
+                                <rect key="frame" x="20" y="276" width="335" height="34"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Región" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-region">
+                                <rect key="frame" x="20" y="318" width="335" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15" weight="semibold"/>
+                                <color key="textColor" xcode11CocoaTouchSystemColor="secondaryLabelColor" cocoaTouchSystemColor="darkGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-divider">
+                                <rect key="frame" x="20" y="354" width="335" height="1"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="separatorColor" cocoaTouchSystemColor="lightGrayColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="DTL-divider-h"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Descripción" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-desc">
+                                <rect key="frame" x="20" y="370" width="335" height="150"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="DTL-safe"/>
+                        <constraints>
+                            <constraint firstItem="DTL-img" firstAttribute="top" secondItem="DTL-safe" secondAttribute="top" constant="20" id="DTL-c1"/>
+                            <constraint firstItem="DTL-img" firstAttribute="leading" secondItem="DTL-safe" secondAttribute="leading" constant="20" id="DTL-c2"/>
+                            <constraint firstItem="DTL-safe" firstAttribute="trailing" secondItem="DTL-img" secondAttribute="trailing" constant="20" id="DTL-c3"/>
+                            <constraint firstItem="DTL-nombre" firstAttribute="top" secondItem="DTL-img" secondAttribute="bottom" constant="16" id="DTL-c4"/>
+                            <constraint firstItem="DTL-nombre" firstAttribute="leading" secondItem="DTL-safe" secondAttribute="leading" constant="20" id="DTL-c5"/>
+                            <constraint firstItem="DTL-safe" firstAttribute="trailing" secondItem="DTL-nombre" secondAttribute="trailing" constant="20" id="DTL-c6"/>
+                            <constraint firstItem="DTL-region" firstAttribute="top" secondItem="DTL-nombre" secondAttribute="bottom" constant="4" id="DTL-c7"/>
+                            <constraint firstItem="DTL-region" firstAttribute="leading" secondItem="DTL-safe" secondAttribute="leading" constant="20" id="DTL-c8"/>
+                            <constraint firstItem="DTL-safe" firstAttribute="trailing" secondItem="DTL-region" secondAttribute="trailing" constant="20" id="DTL-c9"/>
+                            <constraint firstItem="DTL-divider" firstAttribute="top" secondItem="DTL-region" secondAttribute="bottom" constant="16" id="DTL-c10"/>
+                            <constraint firstItem="DTL-divider" firstAttribute="leading" secondItem="DTL-safe" secondAttribute="leading" constant="20" id="DTL-c11"/>
+                            <constraint firstItem="DTL-safe" firstAttribute="trailing" secondItem="DTL-divider" secondAttribute="trailing" constant="20" id="DTL-c12"/>
+                            <constraint firstItem="DTL-desc" firstAttribute="top" secondItem="DTL-divider" secondAttribute="bottom" constant="16" id="DTL-c13"/>
+                            <constraint firstItem="DTL-desc" firstAttribute="leading" secondItem="DTL-safe" secondAttribute="leading" constant="20" id="DTL-c14"/>
+                            <constraint firstItem="DTL-safe" firstAttribute="trailing" secondItem="DTL-desc" secondAttribute="trailing" constant="20" id="DTL-c15"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imagenView" destination="DTL-img" id="con-img"/>
+                        <outlet property="nombreLabel" destination="DTL-nombre" id="con-nombre"/>
+                        <outlet property="regionLabel" destination="DTL-region" id="con-region"/>
+                        <outlet property="descripcionLabel" destination="DTL-desc" id="con-desc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DTL-first" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="500" y="137"/>
+        </scene>
+    </scenes>
+</document>
