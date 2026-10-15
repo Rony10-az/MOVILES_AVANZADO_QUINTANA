@@ -28,7 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // Lista de Culturas Peruanas
 
     var listaCulturas = [
-        Cultura(nombre: "Cultura Chavín", region: "Áncash", descripcion: "Una de las civilizaciones más antiguas del Perú, desarrollada entre los años 1200 a.C. y 200 a.C. Se le considera la cultura matriz de los Andes, ya que su influencia religiosa y artística se extendió a lo largo de la costa y sierra peruana. Destacó por su arquitectura monumental, su culto al dios felino y su refinado trabajo en piedra y cerámica.", imagen: UIImage(named: "chavin"), lugares: [
+        Cultura(nombre: "Cultura Chavín", region: "Áncash", descripcion: "Una de las civilizaciones más antiguas del Perú, desarrollada entre los años 1200 a.C. y 200 a.C. Se le considera la cultura matriz de los Andes, ya que su influencia religiosa y artística se extendió a lo largo de la costa y sierra peruana. Destacó por su arquitectura monumental, su culto al dios felino y su refinado trabajo en piedra y cerámica.", imagen: UIImage(named: "chavin_templo"), lugares: [
             Lugar(nombre: "Templo de Chavín de Huántar", ubicacion: "Distrito de Chavín de Huántar, provincia de Huari, Áncash", descripcion: "Complejo ceremonial principal de la cultura Chavín, famoso por sus galerías subterráneas y el Lanzón Monolítico. Declarado Patrimonio de la Humanidad por la UNESCO en 1985.", imagen: UIImage(named: "chavin_templo")),
             Lugar(nombre: "Obelisco Tello", ubicacion: "Museo Nacional de Chavín, Áncash", descripcion: "Monolito tallado con representaciones de deidades y simbología religiosa chavín, hallado originalmente en el templo principal.", imagen: UIImage(named: "chavin_obelisco"))
         ]),

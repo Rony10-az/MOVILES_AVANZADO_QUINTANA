@@ -39,4 +39,13 @@ class DetalleViewController: UIViewController, UITableViewDelegate, UITableViewD
         imagenView.image = cultura.imagen
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "irADetalleLugar" {
+            let celda = sender as! UITableViewCell
+            let indexPath = tableViewLugares.indexPath(for: celda)!
+            let lugarVC = segue.destination as! DetalleLugarViewController
+            lugarVC.lugar = cultura.lugares[indexPath.row]
+        }
+    }
+
 }
