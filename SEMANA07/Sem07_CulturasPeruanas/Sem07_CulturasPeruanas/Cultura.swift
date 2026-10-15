@@ -13,12 +13,14 @@ class Cultura: NSObject {
     var region: String = ""
     var descripcion: String = ""
     var imagen: UIImage!
+    var lugares: [Lugar] = []
 
-    init(nombre: String, region: String, descripcion: String, imagen: UIImage!) {
+    init(nombre: String, region: String, descripcion: String, imagen: UIImage!, lugares: [Lugar] = []) {
         self.nombre = nombre
         self.region = region
         self.descripcion = descripcion
         self.imagen = imagen
+        self.lugares = lugares
     }
 
 }

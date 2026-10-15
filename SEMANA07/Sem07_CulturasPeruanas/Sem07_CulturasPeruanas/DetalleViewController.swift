@@ -7,12 +7,25 @@
 
 import UIKit
 
-class DetalleViewController: UIViewController {
+class DetalleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cultura.lugares.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //crear un objeto para que se muestre la celda
+        let cell = tableView.dequeueReusableCell(withIdentifier: "celdaLugar") as! CulturaTableViewCell
+        let lugar = cultura.lugares[indexPath.row]
+        cell.nombreCultura.text = "\(lugar.nombre)\n\(lugar.ubicacion)"
+        cell.fotoCultura.image = lugar.imagen
+        return cell
+    }
 
     @IBOutlet weak var nombreLabel: UILabel!
     @IBOutlet weak var regionLabel: UILabel!
     @IBOutlet weak var descripcionLabel: UILabel!
     @IBOutlet weak var imagenView: UIImageView!
+    @IBOutlet weak var tableViewLugares: UITableView!
 
     var cultura: Cultura!
 
