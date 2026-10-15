@@ -53,7 +53,11 @@ Sem07_CulturasPeruanas/
 
 | Lista de Culturas | Detalle de Cultura | Detalle de Lugar |
 |---|---|---|
-| Lista con imagen y nombre | Info de la cultura + tabla de lugares | Info del lugar seleccionado |
+| ![Lista de Culturas](Screenshots/lista_culturas.webp) | ![Detalle de Cultura](Screenshots/detalle_cultura.webp) | ![Detalle de Lugar](Screenshots/detalle_lugar.webp) |
+
+### Flujo completo en el Storyboard
+
+![Storyboard](Screenshots/storyboard.webp)
 
 ## Requisitos
 
