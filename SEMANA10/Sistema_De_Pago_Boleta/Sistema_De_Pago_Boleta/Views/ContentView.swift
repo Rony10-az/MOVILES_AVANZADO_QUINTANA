@@ -12,6 +12,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var datos = DatosBoleta()
     @State private var resultado: ResultadoBoleta?
+    @State private var mensajeError: String?
 
     var body: some View {
         ScrollView {
@@ -23,9 +24,21 @@ struct ContentView: View {
                 seccionFormulario
 
                 Button("Calcular") {
-                    resultado = Boleta.calcular(datos)
+                    if let error = datos.validarNivel1() {
+                        mensajeError = error
+                        resultado = nil
+                    } else {
+                        mensajeError = nil
+                        resultado = Boleta.calcular(datos)
+                    }
                 }
                 .buttonStyle(.borderedProminent)
+
+                if let mensajeError {
+                    Text(mensajeError)
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
 
                 seccionBoleta
             }
