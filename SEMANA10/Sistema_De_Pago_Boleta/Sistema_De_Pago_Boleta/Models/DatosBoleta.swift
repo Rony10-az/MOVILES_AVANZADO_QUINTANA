@@ -1,7 +1,7 @@
 import Foundation
 
 /// Sistema de pensión elegido por el trabajador.
-enum SistemaPension: String, CaseIterable, Identifiable {
+enum SistemaPension: String, CaseIterable, Identifiable, Hashable {
     case onp = "ONP"
     case afp = "AFP"
 
