@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct Sistema_De_Pago_BoletaApp: App {
+
+    init() {
+        #if DEBUG
+        VerificacionCasos.ejecutar()
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
