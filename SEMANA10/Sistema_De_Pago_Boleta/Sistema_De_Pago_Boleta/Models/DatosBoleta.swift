@@ -29,4 +29,15 @@ struct DatosBoleta {
         }
         return nil
     }
+
+    /// Valida los datos del nivel 2 (horas extra y adelantos). Nil si todo está bien.
+    func validarNivel2() -> String? {
+        if horasExtra25 < 0 || horasExtra35 < 0 {
+            return "Las horas extra no pueden ser negativas."
+        }
+        if adelantos < 0 {
+            return "El adelanto no puede ser negativo."
+        }
+        return nil
+    }
 }

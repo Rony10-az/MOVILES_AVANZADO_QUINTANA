@@ -24,7 +24,7 @@ struct ContentView: View {
                 seccionFormulario
 
                 Button("Calcular") {
-                    if let error = datos.validarNivel1() {
+                    if let error = datos.validarNivel1() ?? datos.validarNivel2() {
                         mensajeError = error
                         resultado = nil
                     } else {
