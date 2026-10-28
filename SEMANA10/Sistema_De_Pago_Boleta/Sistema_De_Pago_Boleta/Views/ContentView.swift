@@ -70,6 +70,26 @@ struct ContentView: View {
                 }
             }
             .pickerStyle(.segmented)
+
+            if datos.sistemaPension == .afp {
+                Picker("AFP", selection: $datos.afpElegida) {
+                    ForEach(TipoAFP.allCases) { afp in
+                        Text(afp.rawValue).tag(afp)
+                    }
+                }
+            }
+
+            TextField("Horas extra 25%", value: $datos.horasExtra25, format: .number)
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
+
+            TextField("Horas extra 35%", value: $datos.horasExtra35, format: .number)
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
+
+            TextField("Adelantos", value: $datos.adelantos, format: .number)
+                .keyboardType(.decimalPad)
+                .textFieldStyle(.roundedBorder)
         }
     }
 
@@ -80,11 +100,17 @@ struct ContentView: View {
             bloque(titulo: "REMUNERACIONES") {
                 fila("Sueldo computable", resultado?.sueldoComputable)
                 fila("Asignación familiar", resultado?.asignacionFamiliar)
+                fila("Horas extra 25%", resultado?.horasExtra25Monto)
+                fila("Horas extra 35%", resultado?.horasExtra35Monto)
                 fila("Total remuneraciones", resultado?.totalRemuneraciones, destacado: true)
             }
 
             bloque(titulo: "RETENCIONES / DESCUENTOS") {
                 fila("ONP", resultado?.onp)
+                fila("AFP fondo", resultado?.afpFondo)
+                fila("AFP comisión", resultado?.afpComision)
+                fila("AFP seguro", resultado?.afpSeguro)
+                fila("Adelantos", resultado?.adelantos)
                 fila("Total descuentos", resultado?.totalDescuentos)
                 fila("NETO A PAGAR", resultado?.netoAPagar, destacado: true)
             }

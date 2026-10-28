@@ -1,7 +1,7 @@
 import Foundation
 
 /// Identifica la AFP elegida; sirve de llave para `Parametros.tasasAFP`.
-enum TipoAFP: String, CaseIterable, Identifiable {
+enum TipoAFP: String, CaseIterable, Identifiable, Hashable {
     case ejemplo = "AFP Ejemplo"
 
     var id: String { rawValue }
