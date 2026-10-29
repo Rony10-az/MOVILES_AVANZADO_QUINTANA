@@ -16,9 +16,13 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Boleta de ejemplo")
-                    .font(.title2)
-                    .bold()
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Boleta Electrónica")
+                        .font(.largeTitle.bold())
+                    Text("Boleta de ejemplo")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
 
                 seccionFormulario
 
@@ -52,47 +56,70 @@ struct ContentView: View {
     private var seccionFormulario: some View {
         encabezado("FORMULARIO") {
             tarjeta {
-                VStack(spacing: 12) {
-                    TextField("Sueldo básico", value: $datos.sueldoBasico, format: .number)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(.roundedBorder)
-
-                    TextField("Días laborados", value: $datos.diasLaborados, format: .number)
-                        .keyboardType(.numberPad)
-                        .textFieldStyle(.roundedBorder)
-
-                    Picker("¿Tiene hijos?", selection: $datos.tieneHijos) {
-                        Text("No").tag(false)
-                        Text("Sí").tag(true)
+                VStack(spacing: 14) {
+                    filaCampo("Sueldo básico") {
+                        TextField("0", value: $datos.sueldoBasico, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
                     }
-                    .pickerStyle(.segmented)
 
-                    Picker("Sistema de pensión", selection: $datos.sistemaPension) {
-                        ForEach(SistemaPension.allCases) { sistema in
-                            Text(sistema.rawValue).tag(sistema)
+                    filaCampo("Días laborados") {
+                        TextField("0", value: $datos.diasLaborados, format: .number)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 60)
+                    }
+
+                    filaCampo("¿Tiene hijos?") {
+                        Picker("", selection: $datos.tieneHijos) {
+                            Text("No").tag(false)
+                            Text("Sí").tag(true)
                         }
+                        .pickerStyle(.segmented)
+                        .frame(width: 160)
                     }
-                    .pickerStyle(.segmented)
+
+                    filaCampo("Sistema de pensión") {
+                        Picker("", selection: $datos.sistemaPension) {
+                            ForEach(SistemaPension.allCases) { sistema in
+                                Text(sistema.rawValue).tag(sistema)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 160)
+                    }
 
                     if datos.sistemaPension == .afp {
-                        Picker("AFP", selection: $datos.afpElegida) {
-                            ForEach(TipoAFP.allCases) { afp in
-                                Text(afp.rawValue).tag(afp)
+                        filaCampo("AFP") {
+                            Picker("", selection: $datos.afpElegida) {
+                                ForEach(TipoAFP.allCases) { afp in
+                                    Text(afp.rawValue).tag(afp)
+                                }
                             }
                         }
                     }
 
-                    TextField("Horas extra 25%", value: $datos.horasExtra25, format: .number)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(.roundedBorder)
+                    filaCampo("Horas extra 25%") {
+                        TextField("0", value: $datos.horasExtra25, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 70)
+                    }
 
-                    TextField("Horas extra 35%", value: $datos.horasExtra35, format: .number)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(.roundedBorder)
+                    filaCampo("Horas extra 35%") {
+                        TextField("0", value: $datos.horasExtra35, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 70)
+                    }
 
-                    TextField("Adelantos", value: $datos.adelantos, format: .number)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(.roundedBorder)
+                    filaCampo("Adelantos") {
+                        TextField("0", value: $datos.adelantos, format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                    }
                 }
             }
         }
@@ -163,6 +190,17 @@ struct ContentView: View {
     }
 
     // MARK: - Helpers visuales
+
+    @ViewBuilder
+    private func filaCampo<Contenido: View>(
+        _ etiqueta: String, @ViewBuilder contenido: () -> Contenido
+    ) -> some View {
+        HStack {
+            Text(etiqueta)
+            Spacer()
+            contenido()
+        }
+    }
 
     @ViewBuilder
     private func encabezado<Contenido: View>(
