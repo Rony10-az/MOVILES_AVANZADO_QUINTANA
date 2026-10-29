@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var datos = DatosBoleta()
     @State private var resultado: ResultadoBoleta?
     @State private var mensajeError: String?
+    @State private var pdfURL: URL?
 
     var body: some View {
         ScrollView {
@@ -34,6 +35,7 @@ struct ContentView: View {
                         mensajeError = nil
                         resultado = Boleta.calcular(datos)
                     }
+                    pdfURL = nil
                 }
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
@@ -45,6 +47,23 @@ struct ContentView: View {
                 }
 
                 seccionBoleta
+
+                if let resultado {
+                    Button {
+                        pdfURL = ExportadorPDF.generar(ReciboPDFView(resultado: resultado))
+                    } label: {
+                        Label("Generar boleta electrónica (PDF)", systemImage: "doc.richtext")
+                    }
+                    .buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
+
+                    if let pdfURL {
+                        ShareLink(item: pdfURL) {
+                            Label("Compartir / Guardar PDF", systemImage: "square.and.arrow.up")
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
             }
             .padding()
         }
