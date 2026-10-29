@@ -77,10 +77,14 @@ struct ContentView: View {
             tarjeta {
                 VStack(spacing: 14) {
                     filaCampo("Sueldo básico") {
-                        TextField("0", value: $datos.sueldoBasico, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 100)
+                        TextField(
+                            "0.00",
+                            value: $datos.sueldoBasico,
+                            format: .number.precision(.fractionLength(2)).locale(Locale(identifier: "en_US"))
+                        )
+                        .keyboardType(.decimalPad)
+                        .multilineTextAlignment(.trailing)
+                        .frame(width: 120)
                     }
 
                     filaCampo("Días laborados") {
