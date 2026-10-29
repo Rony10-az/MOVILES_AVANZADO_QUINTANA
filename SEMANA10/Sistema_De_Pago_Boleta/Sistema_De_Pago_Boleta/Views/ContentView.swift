@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// Lienzo nivel 1 (docs/lienzo-nivel1.md): solo el acomodo visual.
-/// Los TextField/Picker reales y el binding a Boleta.calcular van en los commits 8 y 9.
+/// UI de la boleta con tarjetas por sección, siguiendo el lienzo de docs/.
 struct ContentView: View {
     @State private var datos = DatosBoleta()
     @State private var resultado: ResultadoBoleta?
@@ -16,7 +15,7 @@ struct ContentView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text("Boleta de ejemplo")
                     .font(.title2)
                     .bold()
@@ -33,6 +32,7 @@ struct ContentView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity)
 
                 if let mensajeError {
                     Text(mensajeError)
@@ -44,98 +44,164 @@ struct ContentView: View {
             }
             .padding()
         }
+        .background(Color(.systemGroupedBackground))
     }
 
+    // MARK: - Formulario
+
     private var seccionFormulario: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("FORMULARIO").font(.headline)
+        encabezado("FORMULARIO") {
+            tarjeta {
+                VStack(spacing: 12) {
+                    TextField("Sueldo básico", value: $datos.sueldoBasico, format: .number)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
 
-            TextField("Sueldo básico", value: $datos.sueldoBasico, format: .number)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
+                    TextField("Días laborados", value: $datos.diasLaborados, format: .number)
+                        .keyboardType(.numberPad)
+                        .textFieldStyle(.roundedBorder)
 
-            TextField("Días laborados", value: $datos.diasLaborados, format: .number)
-                .keyboardType(.numberPad)
-                .textFieldStyle(.roundedBorder)
+                    Picker("¿Tiene hijos?", selection: $datos.tieneHijos) {
+                        Text("No").tag(false)
+                        Text("Sí").tag(true)
+                    }
+                    .pickerStyle(.segmented)
 
-            Picker("¿Tiene hijos?", selection: $datos.tieneHijos) {
-                Text("No").tag(false)
-                Text("Sí").tag(true)
-            }
-            .pickerStyle(.segmented)
+                    Picker("Sistema de pensión", selection: $datos.sistemaPension) {
+                        ForEach(SistemaPension.allCases) { sistema in
+                            Text(sistema.rawValue).tag(sistema)
+                        }
+                    }
+                    .pickerStyle(.segmented)
 
-            Picker("Sistema de pensión", selection: $datos.sistemaPension) {
-                ForEach(SistemaPension.allCases) { sistema in
-                    Text(sistema.rawValue).tag(sistema)
+                    if datos.sistemaPension == .afp {
+                        Picker("AFP", selection: $datos.afpElegida) {
+                            ForEach(TipoAFP.allCases) { afp in
+                                Text(afp.rawValue).tag(afp)
+                            }
+                        }
+                    }
+
+                    TextField("Horas extra 25%", value: $datos.horasExtra25, format: .number)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
+
+                    TextField("Horas extra 35%", value: $datos.horasExtra35, format: .number)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
+
+                    TextField("Adelantos", value: $datos.adelantos, format: .number)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
                 }
             }
-            .pickerStyle(.segmented)
+        }
+    }
 
-            if datos.sistemaPension == .afp {
-                Picker("AFP", selection: $datos.afpElegida) {
-                    ForEach(TipoAFP.allCases) { afp in
-                        Text(afp.rawValue).tag(afp)
+    // MARK: - Boleta
+
+    private var seccionBoleta: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("BOLETA")
+                .font(.title3)
+                .bold()
+
+            encabezado("REMUNERACIONES") {
+                tarjeta {
+                    VStack(spacing: 0) {
+                        fila("Sueldo computable", resultado?.sueldoComputable)
+                        divisor()
+                        fila("Asignación familiar", resultado?.asignacionFamiliar)
+                        divisor()
+                        fila("Horas extra 25%", resultado?.horasExtra25Monto)
+                        divisor()
+                        fila("Horas extra 35%", resultado?.horasExtra35Monto)
+                        divisor()
+                        fila("Total remuneraciones", resultado?.totalRemuneraciones, destacado: true)
                     }
                 }
             }
 
-            TextField("Horas extra 25%", value: $datos.horasExtra25, format: .number)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
+            encabezado("RETENCIONES / DESCUENTOS") {
+                VStack(spacing: 10) {
+                    tarjeta(fondo: Color.red.opacity(0.08)) {
+                        VStack(spacing: 0) {
+                            fila("ONP", resultado?.onp, color: .red)
+                            divisor(color: Color.red.opacity(0.2))
+                            fila("AFP fondo", resultado?.afpFondo, color: .red)
+                            divisor(color: Color.red.opacity(0.2))
+                            fila("AFP comisión", resultado?.afpComision, color: .red)
+                            divisor(color: Color.red.opacity(0.2))
+                            fila("AFP seguro", resultado?.afpSeguro, color: .red)
+                            divisor(color: Color.red.opacity(0.2))
+                            fila("Adelantos", resultado?.adelantos, color: .red)
+                            divisor(color: Color.red.opacity(0.2))
+                            fila("Total descuentos", resultado?.totalDescuentos, destacado: true, color: .red)
+                        }
+                    }
 
-            TextField("Horas extra 35%", value: $datos.horasExtra35, format: .number)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
-
-            TextField("Adelantos", value: $datos.adelantos, format: .number)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
-        }
-    }
-
-    private var seccionBoleta: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("BOLETA").font(.headline)
-
-            bloque(titulo: "REMUNERACIONES") {
-                fila("Sueldo computable", resultado?.sueldoComputable)
-                fila("Asignación familiar", resultado?.asignacionFamiliar)
-                fila("Horas extra 25%", resultado?.horasExtra25Monto)
-                fila("Horas extra 35%", resultado?.horasExtra35Monto)
-                fila("Total remuneraciones", resultado?.totalRemuneraciones, destacado: true)
+                    tarjeta(fondo: Color.blue.opacity(0.1)) {
+                        HStack {
+                            Text("NETO A PAGAR")
+                                .font(.headline)
+                                .foregroundStyle(.blue)
+                            Spacer()
+                            Text(monto(resultado?.netoAPagar ?? 0))
+                                .font(.title3.bold())
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                }
             }
 
-            bloque(titulo: "RETENCIONES / DESCUENTOS") {
-                fila("ONP", resultado?.onp)
-                fila("AFP fondo", resultado?.afpFondo)
-                fila("AFP comisión", resultado?.afpComision)
-                fila("AFP seguro", resultado?.afpSeguro)
-                fila("Adelantos", resultado?.adelantos)
-                fila("Total descuentos", resultado?.totalDescuentos)
-                fila("NETO A PAGAR", resultado?.netoAPagar, destacado: true)
-            }
-
-            bloque(titulo: "APORTACIONES DEL EMPLEADOR") {
-                fila("EsSalud (9%)", resultado?.esSaludEmpleador)
+            encabezado("APORTACIONES DEL EMPLEADOR") {
+                tarjeta {
+                    fila("EsSalud (9%)", resultado?.esSaludEmpleador)
+                }
             }
         }
     }
+
+    // MARK: - Helpers visuales
 
     @ViewBuilder
-    private func bloque<Contenido: View>(titulo: String, @ViewBuilder contenido: () -> Contenido) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(titulo).font(.subheadline).bold()
+    private func encabezado<Contenido: View>(
+        _ titulo: String, @ViewBuilder contenido: () -> Contenido
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(titulo)
+                .font(.caption)
+                .foregroundStyle(.secondary)
             contenido()
         }
     }
 
-    private func fila(_ etiqueta: String, _ valor: Double?, destacado: Bool = false) -> some View {
+    @ViewBuilder
+    private func tarjeta<Contenido: View>(
+        fondo: Color = Color(.secondarySystemGroupedBackground),
+        @ViewBuilder contenido: () -> Contenido
+    ) -> some View {
+        contenido()
+            .padding()
+            .background(fondo)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func divisor(color: Color = Color(.separator)) -> some View {
+        Rectangle()
+            .fill(color)
+            .frame(height: 1)
+    }
+
+    private func fila(_ etiqueta: String, _ valor: Double?, destacado: Bool = false, color: Color = .primary) -> some View {
         HStack {
             Text(etiqueta)
             Spacer()
             Text(monto(valor ?? 0))
         }
+        .padding(.vertical, 6)
         .fontWeight(destacado ? .bold : .regular)
+        .foregroundStyle(color)
     }
 
     private func monto(_ valor: Double) -> String {
