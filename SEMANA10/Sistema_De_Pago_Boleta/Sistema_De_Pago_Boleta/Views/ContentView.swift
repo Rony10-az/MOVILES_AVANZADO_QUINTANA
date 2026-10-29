@@ -23,6 +23,17 @@ struct ContentView: View {
                     Text("Boleta de ejemplo")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+
+                    if datos.modoReto {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(datos.nombreTrabajador)
+                                .font(.callout.bold())
+                            Text(datos.razonSocialEmpleador)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.top, 6)
+                    }
                 }
 
                 seccionFormulario
@@ -76,6 +87,22 @@ struct ContentView: View {
         encabezado("FORMULARIO") {
             tarjeta {
                 VStack(spacing: 14) {
+                    Toggle("Nivel 3 (reto)", isOn: $datos.modoReto)
+
+                    if datos.modoReto {
+                        filaCampo("Nombre del trabajador") {
+                            TextField("Nombre", text: $datos.nombreTrabajador)
+                                .multilineTextAlignment(.trailing)
+                        }
+
+                        filaCampo("Razón social") {
+                            TextField("Empresa", text: $datos.razonSocialEmpleador)
+                                .multilineTextAlignment(.trailing)
+                        }
+
+                        divisor()
+                    }
+
                     filaCampo("Sueldo básico") {
                         TextField(
                             "0.00",
@@ -174,6 +201,20 @@ struct ContentView: View {
 
             encabezado("RETENCIONES / DESCUENTOS") {
                 VStack(spacing: 10) {
+                    if datos.modoReto {
+                        tarjeta(fondo: Color.orange.opacity(0.08)) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("ONP vs. AFP (comparativo, informativo)")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                HStack(spacing: 12) {
+                                    comparativo("ONP (13%)", resultado?.onpComparativo)
+                                    comparativo("AFP (total)", resultado?.afpComparativoTotal)
+                                }
+                            }
+                        }
+                    }
+
                     tarjeta(fondo: Color.red.opacity(0.08)) {
                         VStack(spacing: 0) {
                             fila("ONP", resultado?.onp, color: .red)
@@ -185,6 +226,10 @@ struct ContentView: View {
                             fila("AFP seguro", resultado?.afpSeguro, color: .red)
                             divisor(color: Color.red.opacity(0.2))
                             fila("Adelantos", resultado?.adelantos, color: .red)
+                            if datos.modoReto {
+                                divisor(color: Color.red.opacity(0.2))
+                                fila("Renta 5ta categoría", resultado?.rentaQuintaMensual, color: .red)
+                            }
                             divisor(color: Color.red.opacity(0.2))
                             fila("Total descuentos", resultado?.totalDescuentos, destacado: true, color: .red)
                         }
@@ -246,6 +291,20 @@ struct ContentView: View {
             .padding()
             .background(fondo)
             .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func comparativo(_ titulo: String, _ valor: Double?) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(titulo)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            Text(monto(valor ?? 0))
+                .font(.headline)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(8)
+        .background(Color(.systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
     private func divisor(color: Color = Color(.separator)) -> some View {

@@ -20,6 +20,11 @@ struct ResultadoBoleta {
 
     // Aportaciones del empleador
     var esSaludEmpleador: Double = 0
+
+    // Nivel 3 (reto)
+    var onpComparativo: Double = 0
+    var afpComparativoTotal: Double = 0
+    var rentaQuintaMensual: Double = 0
 }
 
 /// Aplica las fórmulas de docs/reglas-calculo.md sobre los datos de entrada.
@@ -64,7 +69,42 @@ struct Boleta {
 
         resultado.esSaludEmpleador = redondear(resultado.totalRemuneraciones * Parametros.porcentajeEsSalud)
 
+        // Nivel 3 (reto): ONP y AFP comparativos, lado a lado, sin importar cuál se eligió.
+        resultado.onpComparativo = redondear(resultado.totalRemuneraciones * Parametros.porcentajeONP)
+        if let tasas = Parametros.tasasAFP[datos.afpElegida] {
+            // Mismo criterio que el descuento real: cada concepto se redondea y luego se suma.
+            resultado.afpComparativoTotal = redondear(resultado.totalRemuneraciones * tasas.fondo)
+                + redondear(resultado.totalRemuneraciones * tasas.comision)
+                + redondear(resultado.totalRemuneraciones * tasas.seguro)
+        }
+
+        if datos.modoReto {
+            resultado.rentaQuintaMensual = calcularRenta5ta(remuneracionMensual: resultado.totalRemuneraciones)
+            resultado.totalDescuentos += resultado.rentaQuintaMensual
+            resultado.netoAPagar -= resultado.rentaQuintaMensual
+        }
+
         return resultado
+    }
+
+    /// Retención mensual de renta de 5.ª categoría (procedimiento general de SUNAT,
+    /// simplificado: impuesto anual / 12). Solo se usa en el Nivel 3 (reto).
+    private static func calcularRenta5ta(remuneracionMensual: Double) -> Double {
+        let brutaAnual = remuneracionMensual * 12
+        let deduccion = 7 * Parametros.uit
+        let netaAnual = max(0, brutaAnual - deduccion)
+
+        var restante = netaAnual
+        var impuestoAnual = 0.0
+        for tramo in Parametros.tramosRenta5ta {
+            if restante <= 0 { break }
+            let limite = tramo.limiteEnUIT == .infinity ? restante : tramo.limiteEnUIT * Parametros.uit
+            let base = min(restante, limite)
+            impuestoAnual += base * tramo.tasa
+            restante -= base
+        }
+
+        return redondear(impuestoAnual / 12)
     }
 
     private static func redondear(_ valor: Double) -> Double {

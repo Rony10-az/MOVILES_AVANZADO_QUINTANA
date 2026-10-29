@@ -38,4 +38,17 @@ struct Parametros {
     static let tasasAFP: [TipoAFP: TasasAFP] = [
         .ejemplo: TasasAFP(fondo: 0.1000, comision: 0.0160, seguro: 0.0135)
     ]
+
+    /// UIT — valor de ejemplo; verificar el vigente en SUNAT. Solo para el Nivel 3 (reto).
+    static let uit: Double = 5350.00
+
+    /// Tramos progresivos de renta de 5.ª categoría (en UIT) y su tasa. Procedimiento
+    /// general de SUNAT, simplificado: retención mensual = impuesto anual / 12.
+    static let tramosRenta5ta: [(limiteEnUIT: Double, tasa: Double)] = [
+        (5, 0.08),
+        (15, 0.14),
+        (15, 0.17),
+        (10, 0.20),
+        (.infinity, 0.30),
+    ]
 }

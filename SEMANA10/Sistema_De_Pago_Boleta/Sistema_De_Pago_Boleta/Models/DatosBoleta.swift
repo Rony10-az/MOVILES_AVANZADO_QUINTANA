@@ -19,6 +19,11 @@ struct DatosBoleta {
     var horasExtra35: Double = 0
     var adelantos: Double = 0
 
+    /// Nivel 3 (reto): encabezado ficticio, ONP/AFP lado a lado y renta de 5.ª categoría.
+    var modoReto: Bool = false
+    var nombreTrabajador: String = "Trabajador Ejemplo"
+    var razonSocialEmpleador: String = "Empresa Ejemplo S.A.C."
+
     /// Valida los datos del nivel 1 (sueldo y días). Nil si todo está bien.
     func validarNivel1() -> String? {
         if sueldoBasico <= 0 {
