@@ -17,6 +17,7 @@ class Alumno {
     var apellido: String
     var nombre: String
     var dni: String
+    var curso: Curso?    // Relación: un alumno pertenece a un curso (opcional)
     // Identificador único del alumno
     // Constructor que inicializa un nuevo objeto Alumno con los datos proporcionados
     init(idAlumno: UUID = UUID(), apellido: String, nombre: String, dni: String) {
