@@ -34,6 +34,8 @@ class ViewController: UIViewController , UITableViewDelegate, UITableViewDataSou
         TablaContacto.delegate = self
         mostrarRutaBaseDeDatos()
         cargarInfoCoreData()
+        // probarRelacion()    // Ya probado una vez, comentado para no crear grupos repetidos
+
     }
 
 
