@@ -19,7 +19,8 @@ class MainTabBarController: UITabBarController {
         switch SesionUsuario.compartida.rolActual {
         case .vendedor:
             let venta = envolver(NuevaVentaViewController(), titulo: "Venta", icono: "cart.badge.plus")
-            viewControllers = [productos, clientes, venta, cuenta]
+            let misVentas = envolver(MisVentasViewController(), titulo: "Mis ventas", icono: "list.bullet.rectangle")
+            viewControllers = [productos, clientes, venta, misVentas, cuenta]
         case .supervisor, .none:
             viewControllers = [productos, clientes, cuenta]
         }
