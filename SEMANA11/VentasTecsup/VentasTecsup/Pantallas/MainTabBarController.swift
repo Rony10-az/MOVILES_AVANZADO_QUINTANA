@@ -11,10 +11,18 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let productos = envolver(ProductosViewController(), titulo: "Productos", icono: "shippingbox")
         let clientes = envolver(ClientesViewController(), titulo: "Clientes", icono: "person.2")
         let cuenta = envolver(CuentaViewController(), titulo: "Cuenta", icono: "person.crop.circle")
-        viewControllers = [productos, clientes, cuenta]
+
+        switch SesionUsuario.compartida.rolActual {
+        case .vendedor:
+            let venta = envolver(NuevaVentaViewController(), titulo: "Venta", icono: "cart.badge.plus")
+            viewControllers = [productos, clientes, venta, cuenta]
+        case .supervisor, .none:
+            viewControllers = [productos, clientes, cuenta]
+        }
     }
 
     private func envolver(_ vc: UIViewController, titulo: String = "", icono: String = "circle") -> UINavigationController {
