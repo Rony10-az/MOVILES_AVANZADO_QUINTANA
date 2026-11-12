@@ -20,3 +20,17 @@
 - **Restricciones:** No mezclar el historial completo de la rama `manual` (que incluye ejercicios de otras semanas); copiar solo la carpeta del proyecto `VentasTecsup`.
 - **Formato esperado:** Un commit que traiga la base, sin tocar el resto del historial de `ai-assisted`.
 - **Qué se hizo con la respuesta:** Se aceptó tal cual (`git checkout manual -- SEMANA11/VentasTecsup` + commit). Las mejoras de diseño y lógica quedan pendientes como siguiente paso.
+
+## Consulta 4
+- **Contexto:** Resumen del Supervisor en nivel básico (solo 3 indicadores de texto); faltaba el nivel Reto del expediente.
+- **Tarea:** Rediseñar la pantalla con tarjetas, un gráfico de barras de los últimos 7 días, un ranking de vendedores del mes (con barra proporcional) y una lista de productos con stock ≤ 5 marcados "Reponer"; todo calculado con fetch requests sobre Core Data, sin datos fijos de ejemplo.
+- **Restricciones:** No usar Swift Charts ni dependencias externas (solo UIKit); mantener los mismos cálculos de negocio ya definidos en `ReglasNegocio.swift`.
+- **Formato esperado:** Código Swift compilable.
+- **Qué se hizo con la respuesta:** Se aceptó el diseño y se verificó en el simulador con datos reales (una venta registrada) que el gráfico, el ranking y el stock bajo se calculan correctamente.
+
+## Consulta 5
+- **Contexto:** Pantallas de Productos y Clientes con el mismo aspecto plano de la rama `manual` (un punto de color, sin avatar).
+- **Tarea:** Mejorar el diseño acercándolo a la maqueta: insignia de stock con color según umbral en Productos, y avatar circular con iniciales + insignia de categoría (VIP/Frecuente/Regular) en Clientes.
+- **Restricciones:** Sin romper la lógica de permisos por rol ya implementada (CRUD solo para Supervisor en Productos, borrado solo para Supervisor en Clientes).
+- **Formato esperado:** Código Swift compilable.
+- **Qué se hizo con la respuesta:** Se aceptó el diseño, pero al probarlo en el simulador las insignias no se veían (quedaban con tamaño cero como `accessoryView`). Se pidió el diagnóstico, se aceptó el fix (fijar `frame.size` con `intrinsicContentSize` antes de asignarlas) y se verificó en el simulador que ya se muestran correctamente.
