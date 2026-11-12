@@ -9,6 +9,7 @@
 - **Caso:** Ventas — UIKit + Core Data
 - **Nombre de la app:** Ventas Tecsup
 - **Roles:** Vendedor y Supervisor
+- Github : https://github.com/Rony10-az/MOVILES_AVANZADO_QUINTANA/tree/main/SEMANA11
 
 ## 2. Modelo de datos
 
