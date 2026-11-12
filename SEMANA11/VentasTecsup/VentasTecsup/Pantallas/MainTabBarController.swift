@@ -11,8 +11,10 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let productos = envolver(ProductosViewController(), titulo: "Productos", icono: "shippingbox")
+        let clientes = envolver(ClientesViewController(), titulo: "Clientes", icono: "person.2")
         let cuenta = envolver(CuentaViewController(), titulo: "Cuenta", icono: "person.crop.circle")
-        viewControllers = [cuenta]
+        viewControllers = [productos, clientes, cuenta]
     }
 
     private func envolver(_ vc: UIViewController, titulo: String = "", icono: String = "circle") -> UINavigationController {
