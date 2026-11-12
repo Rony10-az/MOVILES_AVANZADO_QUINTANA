@@ -26,10 +26,13 @@ class NuevaVentaViewController: UITableViewController {
         super.viewDidLoad()
         title = "Nueva venta"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celdaCantidad")
         cantidadStepper.minimumValue = 1
         cantidadStepper.maximumValue = 1
         cantidadStepper.value = 1
         cantidadStepper.addTarget(self, action: #selector(cantidadCambiada), for: .valueChanged)
+        // Espacio extra para que "Registrar venta" no quede bajo el tab bar flotante.
+        tableView.contentInset.bottom = 90
     }
 
     // MARK: - Secciones
@@ -55,11 +58,11 @@ class NuevaVentaViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
+        let identificador = Seccion(rawValue: indexPath.section)! == .cantidad ? "celdaCantidad" : "celda"
+        let celda = tableView.dequeueReusableCell(withIdentifier: identificador, for: indexPath)
         celda.selectionStyle = .none
         celda.accessoryView = nil
         celda.accessoryType = .none
-        celda.textLabel?.textColor = .label
 
         switch Seccion(rawValue: indexPath.section)! {
         case .vendedor:
@@ -111,10 +114,10 @@ class NuevaVentaViewController: UITableViewController {
             var config = celda.defaultContentConfiguration()
             config.text = fila.0
             config.secondaryText = fila.1.comoMoneda
-            celda.contentConfiguration = config
             if fila.0 == "Total" {
-                celda.textLabel?.font = .boldSystemFont(ofSize: 17)
+                config.textProperties.font = .boldSystemFont(ofSize: 17)
             }
+            celda.contentConfiguration = config
 
         case .accion:
             var config = celda.defaultContentConfiguration()
