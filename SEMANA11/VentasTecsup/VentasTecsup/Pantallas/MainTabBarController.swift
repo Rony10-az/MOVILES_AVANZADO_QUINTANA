@@ -22,8 +22,9 @@ class MainTabBarController: UITabBarController {
             let misVentas = envolver(MisVentasViewController(), titulo: "Mis ventas", icono: "list.bullet.rectangle")
             viewControllers = [productos, clientes, venta, misVentas, cuenta]
         case .supervisor:
+            let resumen = envolver(ResumenViewController(), titulo: "Resumen", icono: "chart.bar")
             let ventas = envolver(VentasEquipoViewController(), titulo: "Ventas", icono: "list.bullet.rectangle")
-            viewControllers = [ventas, productos, clientes, cuenta]
+            viewControllers = [resumen, ventas, productos, clientes, cuenta]
         case .none:
             viewControllers = [productos, clientes, cuenta]
         }
