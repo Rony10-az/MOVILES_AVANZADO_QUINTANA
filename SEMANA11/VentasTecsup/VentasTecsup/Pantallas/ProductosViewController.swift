@@ -147,18 +147,18 @@ class ProductosViewController: UITableViewController {
         let producto = productos[indexPath.row]
         var config = celda.defaultContentConfiguration()
         config.text = producto.nombre
-        config.secondaryText = "\(producto.categoria ?? "") · \(producto.precio.comoMoneda) · Stock \(producto.stock)"
+        config.secondaryText = "\(producto.categoria ?? "") · \(producto.precio.comoMoneda)"
         celda.contentConfiguration = config
-        celda.accessoryView = indicadorStock(producto.stock)
+        celda.accessoryView = insigniaStock(producto.stock)
         return celda
     }
 
-    private func indicadorStock(_ stock: Int32) -> UIView {
+    /// Insignia "N u." con color según el umbral de stock (verde/ámbar/rojo).
+    private func insigniaStock(_ stock: Int32) -> UIView {
         let color: UIColor = stock > 10 ? .tecsupVerde : (stock >= 6 ? .tecsupAmbar : .tecsupRojo)
-        let punto = UIView(frame: CGRect(x: 0, y: 0, width: 14, height: 14))
-        punto.backgroundColor = color
-        punto.layer.cornerRadius = 7
-        return punto
+        let insignia = InsigniaLabel(texto: "\(stock) u.", color: color)
+        insignia.frame.size = insignia.intrinsicContentSize
+        return insignia
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

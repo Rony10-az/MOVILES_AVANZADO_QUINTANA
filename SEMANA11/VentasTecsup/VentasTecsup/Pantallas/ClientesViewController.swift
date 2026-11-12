@@ -102,13 +102,27 @@ class ClientesViewController: UITableViewController {
         let cliente = clientes[indexPath.row]
         var config = celda.defaultContentConfiguration()
         config.text = cliente.nombre
-        config.secondaryText = "\(cliente.documento ?? "") · \(cliente.categoria.rawValue) · \(cliente.totalComprado.comoMoneda) comprado"
+        config.secondaryText = "\(cliente.documento ?? "") · \(cliente.totalComprado.comoMoneda) comprado"
+        config.image = imagenAvatar(nombre: cliente.nombre ?? "?")
+        config.imageProperties.maximumSize = CGSize(width: 36, height: 36)
+        config.imageProperties.cornerRadius = 18
         celda.contentConfiguration = config
-        celda.accessoryType = .detailButton
+        let insignia = InsigniaLabel(texto: cliente.categoria.rawValue, color: colorCategoria(cliente.categoria))
+        insignia.frame.size = insignia.intrinsicContentSize
+        celda.accessoryView = insignia
         return celda
     }
 
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+    private func colorCategoria(_ categoria: CategoriaCliente) -> UIColor {
+        switch categoria {
+        case .vip: return .systemPurple
+        case .frecuente: return .tecsupAzul
+        case .regular: return .systemGray
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         presentarFormulario(cliente: clientes[indexPath.row])
     }
 
