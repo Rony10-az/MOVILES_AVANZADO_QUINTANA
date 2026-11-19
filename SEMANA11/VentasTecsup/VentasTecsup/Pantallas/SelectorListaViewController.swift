@@ -4,6 +4,7 @@
 //
 //  Lista reutilizable para elegir un Cliente o un Producto desde
 //  Nueva venta, con búsqueda por el texto visible de cada fila.
+//  Tabla e identificador de celda definidos en Main.storyboard.
 //
 
 import UIKit
@@ -15,38 +16,42 @@ struct ItemSeleccionable {
     let subtitulo: String
 }
 
-class SelectorListaViewController: UITableViewController {
+class SelectorListaViewController: UIViewController {
 
-    private let items: [ItemSeleccionable]
-    private var filtrados: [ItemSeleccionable]
-    private let onSeleccion: (NSManagedObjectID) -> Void
+    @IBOutlet private weak var tablaSelector: UITableView!
+
+    private var items: [ItemSeleccionable] = []
+    private var filtrados: [ItemSeleccionable] = []
+    private var onSeleccion: ((NSManagedObjectID) -> Void)?
     private let buscador = UISearchController(searchResultsController: nil)
 
-    init(titulo: String, items: [ItemSeleccionable], onSeleccion: @escaping (NSManagedObjectID) -> Void) {
+    /// Debe llamarse justo después de instanciar la pantalla desde el storyboard y antes de mostrarla.
+    func configurar(titulo: String, items: [ItemSeleccionable], onSeleccion: @escaping (NSManagedObjectID) -> Void) {
+        self.title = titulo
         self.items = items
         self.filtrados = items
         self.onSeleccion = onSeleccion
-        super.init(style: .plain)
-        self.title = titulo
     }
-
-    required init?(coder: NSCoder) { fatalError("init(coder:) no implementado") }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tablaSelector.dataSource = self
+        tablaSelector.delegate = self
         navigationItem.searchController = buscador
         navigationItem.hidesSearchBarWhenScrolling = false
         buscador.searchResultsUpdater = self
         buscador.obscuresBackgroundDuringPresentation = false
     }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SelectorListaViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filtrados.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let celda = tableView.dequeueReusableCell(withIdentifier: "celdaSelector", for: indexPath)
         let item = filtrados[indexPath.row]
         var config = celda.defaultContentConfiguration()
         config.text = item.titulo
@@ -55,9 +60,9 @@ class SelectorListaViewController: UITableViewController {
         return celda
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = filtrados[indexPath.row]
-        onSeleccion(item.objectID)
+        onSeleccion?(item.objectID)
         navigationController?.popViewController(animated: true)
     }
 }
@@ -68,6 +73,6 @@ extension SelectorListaViewController: UISearchResultsUpdating {
         filtrados = texto.isEmpty ? items : items.filter {
             $0.titulo.localizedCaseInsensitiveContains(texto) || $0.subtitulo.localizedCaseInsensitiveContains(texto)
         }
-        tableView.reloadData()
+        tablaSelector.reloadData()
     }
 }

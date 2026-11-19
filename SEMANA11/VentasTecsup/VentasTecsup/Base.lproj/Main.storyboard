@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login-->
+        <scene sceneID="lg-scene">
+            <objects>
+                <viewController storyboardIdentifier="Login" id="lgVC" customClass="LoginViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lgView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lgStack">
+                                <rect key="frame" x="28" y="356" width="319" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🛒" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgLogo">
+                                        <rect key="frame" x="0.0" y="0.0" width="319" height="76"/>
+                                    </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ventas Tecsup" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgTitulo">
+                                        <rect key="frame" x="0.0" y="88" width="319" height="31"/>
+                                    </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inicia sesión para continuar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgSubtitulo">
+                                        <rect key="frame" x="0.0" y="131" width="319" height="18"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgSpacer1">
+                                        <rect key="frame" x="0.0" y="161" width="319" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="lgC4"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Usuario" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lgUsuario">
+                                        <rect key="frame" x="0.0" y="189" width="319" height="34"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="none" autocorrectionType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Clave" textAlignment="natural" minimumFontSize="17" secureTextEntry="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgClave">
+                                        <rect key="frame" x="0.0" y="235" width="319" height="34"/>
+                                    </textField>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgError">
+                                        <rect key="frame" x="0.0" y="281" width="319" height="16"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgSpacer2">
+                                        <rect key="frame" x="0.0" y="309" width="319" height="8"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="lgC5"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgIngresar">
+                                        <rect key="frame" x="0.0" y="329" width="319" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="lgC6"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="ingresarTocado:" destination="lgVC" eventType="touchUpInside" id="lgAct1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgCrear">
+                                        <rect key="frame" x="0.0" y="387" width="319" height="21"/>
+                                        <state key="normal" title="¿Primera vez? Crear cuenta"/>
+                                        <connections>
+                                            <action selector="crearCuentaTocada:" destination="lgVC" eventType="touchUpInside" id="lgAct2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="lgStack" firstAttribute="leading" secondItem="lgSafeArea" secondAttribute="leading" constant="28" id="lgC1"/>
+                            <constraint firstItem="lgStack" firstAttribute="trailing" secondItem="lgSafeArea" secondAttribute="trailing" constant="-28" id="lgC2"/>
+                            <constraint firstItem="lgStack" firstAttribute="centerY" secondItem="lgView" secondAttribute="centerY" constant="-20" id="lgC3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lgSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="claveField" destination="lgClave" id="lgOut2"/>
+                        <outlet property="errorLabel" destination="lgError" id="lgOut3"/>
+                        <outlet property="ingresarButton" destination="lgIngresar" id="lgOut4"/>
+                        <outlet property="usuarioField" destination="lgUsuario" id="lgOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lgFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50" y="50"/>
+        </scene>
+        <!--Registro-->
+        <scene sceneID="rg-scene">
+            <objects>
+                <viewController storyboardIdentifier="Registro" id="rgVC" customClass="RegistroViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rgView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="rgStack">
+                                <rect key="frame" x="24" y="76" width="327" height="400"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre completo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rgNombre">
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="34"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Usuario" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rgUsuario">
+                                        <rect key="frame" x="0.0" y="48" width="327" height="34"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="none" autocorrectionType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Clave (mínimo 6 caracteres)" textAlignment="natural" minimumFontSize="17" secureTextEntry="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rgClave">
+                                        <rect key="frame" x="0.0" y="96" width="327" height="34"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirmar clave" textAlignment="natural" minimumFontSize="17" secureTextEntry="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rgConfirmar">
+                                        <rect key="frame" x="0.0" y="144" width="327" height="34"/>
+                                    </textField>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tu rol" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgRolTitulo">
+                                        <rect key="frame" x="0.0" y="192" width="327" height="18"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rgRol">
+                                        <rect key="frame" x="0.0" y="224" width="327" height="32"/>
+                                        <segments>
+                                            <segment title="Vendedor"/>
+                                            <segment title="Supervisor"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgError">
+                                        <rect key="frame" x="0.0" y="270" width="327" height="16"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgRegistrar">
+                                        <rect key="frame" x="0.0" y="300" width="327" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="rgC3"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="registrarmeTocado:" destination="rgVC" eventType="touchUpInside" id="rgAct1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="rgStack" firstAttribute="leading" secondItem="rgSafeArea" secondAttribute="leading" constant="24" id="rgC1"/>
+                            <constraint firstItem="rgStack" firstAttribute="trailing" secondItem="rgSafeArea" secondAttribute="trailing" constant="-24" id="rgC2"/>
+                            <constraint firstItem="rgStack" firstAttribute="top" secondItem="rgSafeArea" secondAttribute="top" constant="32" id="rgC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rgSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="claveField" destination="rgClave" id="rgOut3"/>
+                        <outlet property="confirmarClaveField" destination="rgConfirmar" id="rgOut4"/>
+                        <outlet property="errorLabel" destination="rgError" id="rgOut5"/>
+                        <outlet property="nombreField" destination="rgNombre" id="rgOut1"/>
+                        <outlet property="registrarmeButton" destination="rgRegistrar" id="rgOut7"/>
+                        <outlet property="rolControl" destination="rgRol" id="rgOut6"/>
+                        <outlet property="usuarioField" destination="rgUsuario" id="rgOut2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rgFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="500" y="50"/>
+        </scene>
+        <!--Cuenta-->
+        <scene sceneID="cu-scene">
+            <objects>
+                <viewController storyboardIdentifier="Cuenta" id="cuVC" customClass="CuentaViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cuView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cuStack">
+                                <rect key="frame" x="24" y="76" width="327" height="200"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="cuParNombre">
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuNombreTitulo">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                            </label>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuNombreValor">
+                                                <rect key="frame" x="0.0" y="18" width="327" height="22"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="cuParUsuario">
+                                        <rect key="frame" x="0.0" y="56" width="327" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usuario" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuUsuarioTitulo">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                            </label>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuUsuarioValor">
+                                                <rect key="frame" x="0.0" y="18" width="327" height="22"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="cuParRol">
+                                        <rect key="frame" x="0.0" y="112" width="327" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rol" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuRolTitulo">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                            </label>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuRolValor">
+                                                <rect key="frame" x="0.0" y="18" width="327" height="22"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuSpacer">
+                                        <rect key="frame" x="0.0" y="168" width="327" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="cuC3"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuCerrar">
+                                        <rect key="frame" x="0.0" y="204" width="327" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="cuC4"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="cerrarSesionTocado:" destination="cuVC" eventType="touchUpInside" id="cuAct1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cuStack" firstAttribute="leading" secondItem="cuSafeArea" secondAttribute="leading" constant="24" id="cuC1"/>
+                            <constraint firstItem="cuStack" firstAttribute="trailing" secondItem="cuSafeArea" secondAttribute="trailing" constant="-24" id="cuC2"/>
+                            <constraint firstItem="cuStack" firstAttribute="top" secondItem="cuSafeArea" secondAttribute="top" constant="32" id="cuC5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cuSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="cerrarSesionButton" destination="cuCerrar" id="cuOut4"/>
+                        <outlet property="nombreValorLabel" destination="cuNombreValor" id="cuOut1"/>
+                        <outlet property="rolValorLabel" destination="cuRolValor" id="cuOut3"/>
+                        <outlet property="usuarioValorLabel" destination="cuUsuarioValor" id="cuOut2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cuFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="950" y="50"/>
+        </scene>
+        <!--Productos-->
+        <scene sceneID="pr-scene">
+            <objects>
+                <viewController storyboardIdentifier="Productos" id="prVC" customClass="ProductosViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="prView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="prTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaProducto" id="prCelda">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="prCelda" id="prCeldaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="prTabla" firstAttribute="top" secondItem="prView" secondAttribute="top" id="prC1"/>
+                            <constraint firstItem="prTabla" firstAttribute="leading" secondItem="prView" secondAttribute="leading" id="prC2"/>
+                            <constraint firstItem="prTabla" firstAttribute="trailing" secondItem="prView" secondAttribute="trailing" id="prC3"/>
+                            <constraint firstItem="prTabla" firstAttribute="bottom" secondItem="prView" secondAttribute="bottom" id="prC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="prSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaProductos" destination="prTabla" id="prOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="prFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1400" y="50"/>
+        </scene>
+        <!--Clientes-->
+        <scene sceneID="cl-scene">
+            <objects>
+                <viewController storyboardIdentifier="Clientes" id="clVC" customClass="ClientesViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="clView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="clTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaCliente" id="clCelda">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="clCelda" id="clCeldaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="clTabla" firstAttribute="top" secondItem="clView" secondAttribute="top" id="clC1"/>
+                            <constraint firstItem="clTabla" firstAttribute="leading" secondItem="clView" secondAttribute="leading" id="clC2"/>
+                            <constraint firstItem="clTabla" firstAttribute="trailing" secondItem="clView" secondAttribute="trailing" id="clC3"/>
+                            <constraint firstItem="clTabla" firstAttribute="bottom" secondItem="clView" secondAttribute="bottom" id="clC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="clSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaClientes" destination="clTabla" id="clOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="clFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="50"/>
+        </scene>
+        <!--MisVentas-->
+        <scene sceneID="mv-scene">
+            <objects>
+                <viewController storyboardIdentifier="MisVentas" id="mvVC" customClass="MisVentasViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mvView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mvTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaMisVenta" id="mvCelda">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mvCelda" id="mvCeldaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="mvTabla" firstAttribute="top" secondItem="mvView" secondAttribute="top" id="mvC1"/>
+                            <constraint firstItem="mvTabla" firstAttribute="leading" secondItem="mvView" secondAttribute="leading" id="mvC2"/>
+                            <constraint firstItem="mvTabla" firstAttribute="trailing" secondItem="mvView" secondAttribute="trailing" id="mvC3"/>
+                            <constraint firstItem="mvTabla" firstAttribute="bottom" secondItem="mvView" secondAttribute="bottom" id="mvC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mvSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaMisVentas" destination="mvTabla" id="mvOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mvFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2300" y="50"/>
+        </scene>
+        <!--VentasEquipo-->
+        <scene sceneID="ve-scene">
+            <objects>
+                <viewController storyboardIdentifier="VentasEquipo" id="veVC" customClass="VentasEquipoViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="veView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="veTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaVentaEquipo" id="veCelda">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="veCelda" id="veCeldaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="veTabla" firstAttribute="top" secondItem="veView" secondAttribute="top" id="veC1"/>
+                            <constraint firstItem="veTabla" firstAttribute="leading" secondItem="veView" secondAttribute="leading" id="veC2"/>
+                            <constraint firstItem="veTabla" firstAttribute="trailing" secondItem="veView" secondAttribute="trailing" id="veC3"/>
+                            <constraint firstItem="veTabla" firstAttribute="bottom" secondItem="veView" secondAttribute="bottom" id="veC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="veSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaVentasEquipo" destination="veTabla" id="veOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="veFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2750" y="50"/>
+        </scene>
+        <!--NuevaVenta-->
+        <scene sceneID="nv-scene">
+            <objects>
+                <viewController storyboardIdentifier="NuevaVenta" id="nvVC" customClass="NuevaVentaViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nvView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="nvTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaVenta" id="nvCeldaVenta">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nvCeldaVenta" id="nvCeldaVentaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaCantidadVenta" id="nvCeldaCantidad" customClass="CeldaCantidadVenta" customModule="VentasTecsup" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nvCeldaCantidad" id="nvCeldaCantidadContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="horizontal" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="nvCantStack">
+                                                    <rect key="frame" x="16" y="8" width="200" height="27.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvCantLabel">
+                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="27.5"/>
+                                                        </label>
+                                                        <stepper opaque="NO" contentMode="scaleToFill" minimumValue="1" maximumValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nvCantStepper">
+                                                            <rect key="frame" x="36" y="0.0" width="94" height="27.5"/>
+                                                        </stepper>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nvCantStack" firstAttribute="leading" secondItem="nvCeldaCantidadContent" secondAttribute="leading" constant="16" id="nvC5"/>
+                                                <constraint firstItem="nvCeldaCantidadContent" firstAttribute="trailing" secondItem="nvCantStack" secondAttribute="trailing" constant="16" id="nvC6" priority="999"/>
+                                                <constraint firstItem="nvCantStack" firstAttribute="top" secondItem="nvCeldaCantidadContent" secondAttribute="top" constant="8" id="nvC7"/>
+                                                <constraint firstItem="nvCeldaCantidadContent" firstAttribute="bottom" secondItem="nvCantStack" secondAttribute="bottom" constant="8" id="nvC8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="stepper" destination="nvCantStepper" id="nvOut2"/>
+                                            <outlet property="valorLabel" destination="nvCantLabel" id="nvOut3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nvTabla" firstAttribute="top" secondItem="nvView" secondAttribute="top" id="nvC1"/>
+                            <constraint firstItem="nvTabla" firstAttribute="leading" secondItem="nvView" secondAttribute="leading" id="nvC2"/>
+                            <constraint firstItem="nvTabla" firstAttribute="trailing" secondItem="nvView" secondAttribute="trailing" id="nvC3"/>
+                            <constraint firstItem="nvTabla" firstAttribute="bottom" secondItem="nvView" secondAttribute="bottom" id="nvC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nvSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaNuevaVenta" destination="nvTabla" id="nvOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nvFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3200" y="50"/>
+        </scene>
+        <!--SelectorLista-->
+        <scene sceneID="sl-scene">
+            <objects>
+                <viewController storyboardIdentifier="SelectorLista" id="slVC" customClass="SelectorListaViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="slView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" dataMode="prototypes" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="slTabla">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="celdaSelector" id="slCelda">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="slCelda" id="slCeldaContent">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="slTabla" firstAttribute="top" secondItem="slView" secondAttribute="top" id="slC1"/>
+                            <constraint firstItem="slTabla" firstAttribute="leading" secondItem="slView" secondAttribute="leading" id="slC2"/>
+                            <constraint firstItem="slTabla" firstAttribute="trailing" secondItem="slView" secondAttribute="trailing" id="slC3"/>
+                            <constraint firstItem="slTabla" firstAttribute="bottom" secondItem="slView" secondAttribute="bottom" id="slC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="slSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="tablaSelector" destination="slTabla" id="slOut1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="slFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3650" y="50"/>
+        </scene>
+        <!--Resumen-->
+        <scene sceneID="rs-scene">
+            <objects>
+                <viewController storyboardIdentifier="Resumen" id="rsVC" customClass="ResumenViewController" customModule="VentasTecsup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rsView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsScroll">
+                                <rect key="frame" x="0.0" y="59" width="375" height="753"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="rsStack">
+                                        <rect key="frame" x="20" y="20" width="335" height="600"/>
+                                        <subviews>
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hola" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsSaludo">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="29"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="rsIndicadoresRow">
+                                                <rect key="frame" x="0.0" y="53" width="335" height="80"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaHoy">
+                                                        <rect key="frame" x="0.0" y="0.0" width="161" height="80"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaHoyStack">
+                                                                <rect key="frame" x="14" y="14" width="133" height="52"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendido hoy" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaHoyTitulo">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="133" height="16"/>
+                                                                    </label>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S/ 0.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsVendidoHoy">
+                                                                        <rect key="frame" x="0.0" y="20" width="133" height="26"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="rsTarjetaHoyStack" firstAttribute="leading" secondItem="rsTarjetaHoy" secondAttribute="leading" constant="14" id="rsC01"/>
+                                                            <constraint firstItem="rsTarjetaHoy" firstAttribute="trailing" secondItem="rsTarjetaHoyStack" secondAttribute="trailing" constant="14" id="rsC02"/>
+                                                            <constraint firstItem="rsTarjetaHoyStack" firstAttribute="top" secondItem="rsTarjetaHoy" secondAttribute="top" constant="14" id="rsC03"/>
+                                                            <constraint firstItem="rsTarjetaHoy" firstAttribute="bottom" secondItem="rsTarjetaHoyStack" secondAttribute="bottom" constant="14" id="rsC04"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaMes">
+                                                        <rect key="frame" x="173" y="0.0" width="162" height="80"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaMesStack">
+                                                                <rect key="frame" x="14" y="14" width="134" height="52"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IGV del mes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaMesTitulo">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="134" height="16"/>
+                                                                    </label>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S/ 0.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsIgvMes">
+                                                                        <rect key="frame" x="0.0" y="20" width="134" height="26"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="rsTarjetaMesStack" firstAttribute="leading" secondItem="rsTarjetaMes" secondAttribute="leading" constant="14" id="rsC05"/>
+                                                            <constraint firstItem="rsTarjetaMes" firstAttribute="trailing" secondItem="rsTarjetaMesStack" secondAttribute="trailing" constant="14" id="rsC06"/>
+                                                            <constraint firstItem="rsTarjetaMesStack" firstAttribute="top" secondItem="rsTarjetaMes" secondAttribute="top" constant="14" id="rsC07"/>
+                                                            <constraint firstItem="rsTarjetaMes" firstAttribute="bottom" secondItem="rsTarjetaMesStack" secondAttribute="bottom" constant="14" id="rsC08"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rsSeccionGrafico">
+                                                <rect key="frame" x="0.0" y="157" width="335" height="158"/>
+                                                <subviews>
+                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ventas de los últimos 7 días (S/)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsGraficoTitulo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="18"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaGrafico">
+                                                        <rect key="frame" x="0.0" y="26" width="335" height="130"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rsGraficoStack">
+                                                                <rect key="frame" x="14" y="14" width="307" height="102"/>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="130" id="rsC13"/>
+                                                            <constraint firstItem="rsGraficoStack" firstAttribute="leading" secondItem="rsTarjetaGrafico" secondAttribute="leading" constant="14" id="rsC09"/>
+                                                            <constraint firstItem="rsTarjetaGrafico" firstAttribute="trailing" secondItem="rsGraficoStack" secondAttribute="trailing" constant="14" id="rsC10"/>
+                                                            <constraint firstItem="rsGraficoStack" firstAttribute="top" secondItem="rsTarjetaGrafico" secondAttribute="top" constant="14" id="rsC11"/>
+                                                            <constraint firstItem="rsTarjetaGrafico" firstAttribute="bottom" secondItem="rsGraficoStack" secondAttribute="bottom" constant="14" id="rsC12"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rsSeccionRanking">
+                                                <rect key="frame" x="0.0" y="339" width="335" height="100"/>
+                                                <subviews>
+                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ranking de vendedores (mes)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsRankingTitulo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="18"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaRanking">
+                                                        <rect key="frame" x="0.0" y="26" width="335" height="74"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rsRankingStack">
+                                                                <rect key="frame" x="14" y="14" width="307" height="46"/>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="rsRankingStack" firstAttribute="leading" secondItem="rsTarjetaRanking" secondAttribute="leading" constant="14" id="rsC14"/>
+                                                            <constraint firstItem="rsTarjetaRanking" firstAttribute="trailing" secondItem="rsRankingStack" secondAttribute="trailing" constant="14" id="rsC15"/>
+                                                            <constraint firstItem="rsRankingStack" firstAttribute="top" secondItem="rsTarjetaRanking" secondAttribute="top" constant="14" id="rsC16"/>
+                                                            <constraint firstItem="rsTarjetaRanking" firstAttribute="bottom" secondItem="rsRankingStack" secondAttribute="bottom" constant="14" id="rsC17"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rsSeccionStock">
+                                                <rect key="frame" x="0.0" y="463" width="335" height="100"/>
+                                                <subviews>
+                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stock bajo (≤ 5 unidades)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsStockTitulo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="18"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsTarjetaStock">
+                                                        <rect key="frame" x="0.0" y="26" width="335" height="74"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rsStockStack">
+                                                                <rect key="frame" x="14" y="14" width="307" height="46"/>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="rsStockStack" firstAttribute="leading" secondItem="rsTarjetaStock" secondAttribute="leading" constant="14" id="rsC18"/>
+                                                            <constraint firstItem="rsTarjetaStock" firstAttribute="trailing" secondItem="rsStockStack" secondAttribute="trailing" constant="14" id="rsC19"/>
+                                                            <constraint firstItem="rsStockStack" firstAttribute="top" secondItem="rsTarjetaStock" secondAttribute="top" constant="14" id="rsC20"/>
+                                                            <constraint firstItem="rsTarjetaStock" firstAttribute="bottom" secondItem="rsStockStack" secondAttribute="bottom" constant="14" id="rsC21"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="rsStack" firstAttribute="top" secondItem="rsScroll" secondAttribute="top" constant="20" id="rsC22"/>
+                                    <constraint firstItem="rsStack" firstAttribute="leading" secondItem="rsScroll" secondAttribute="leading" constant="20" id="rsC23"/>
+                                    <constraint firstItem="rsScroll" firstAttribute="trailing" secondItem="rsStack" secondAttribute="trailing" constant="20" id="rsC24"/>
+                                    <constraint firstItem="rsScroll" firstAttribute="bottom" secondItem="rsStack" secondAttribute="bottom" constant="32" id="rsC25"/>
+                                    <constraint firstItem="rsStack" firstAttribute="width" secondItem="rsScroll" secondAttribute="width" constant="-40" id="rsC26"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemGroupedBackgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rsScroll" firstAttribute="top" secondItem="rsSafeArea" secondAttribute="top" id="rsC27"/>
+                            <constraint firstItem="rsScroll" firstAttribute="leading" secondItem="rsView" secondAttribute="leading" id="rsC28"/>
+                            <constraint firstItem="rsView" firstAttribute="trailing" secondItem="rsScroll" secondAttribute="trailing" id="rsC29"/>
+                            <constraint firstItem="rsView" firstAttribute="bottom" secondItem="rsScroll" secondAttribute="bottom" id="rsC30"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rsSafeArea"/>
+                    </view>
+                    <connections>
+                        <outlet property="graficoStack" destination="rsGraficoStack" id="rsOut4"/>
+                        <outlet property="igvMesLabel" destination="rsIgvMes" id="rsOut3"/>
+                        <outlet property="rankingStack" destination="rsRankingStack" id="rsOut5"/>
+                        <outlet property="saludoLabel" destination="rsSaludo" id="rsOut1"/>
+                        <outlet property="stockBajoStack" destination="rsStockStack" id="rsOut6"/>
+                        <outlet property="tarjetaGraficoView" destination="rsTarjetaGrafico" id="rsOut9"/>
+                        <outlet property="tarjetaHoyView" destination="rsTarjetaHoy" id="rsOut7"/>
+                        <outlet property="tarjetaMesView" destination="rsTarjetaMes" id="rsOut8"/>
+                        <outlet property="tarjetaRankingView" destination="rsTarjetaRanking" id="rsOut10"/>
+                        <outlet property="tarjetaStockView" destination="rsTarjetaStock" id="rsOut11"/>
+                        <outlet property="vendidoHoyLabel" destination="rsVendidoHoy" id="rsOut2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rsFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4100" y="50"/>
+        </scene>
+    </scenes>
+</document>

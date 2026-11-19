@@ -4,6 +4,7 @@
 //
 //  Pantalla A9 (nivel Reto): indicadores, gráfico de 7 días,
 //  ranking de vendedores y stock bajo, con fetch requests.
+//  Estructura (scroll, tarjetas) definida en Main.storyboard.
 //
 
 import UIKit
@@ -11,121 +12,37 @@ import CoreData
 
 class ResumenViewController: UIViewController {
 
-    private let saludoLabel = UILabel()
-    private let vendidoHoyLabel = UILabel()
-    private let igvMesLabel = UILabel()
-    private let graficoStack = UIStackView()
-    private let rankingStack = UIStackView()
-    private let stockBajoStack = UIStackView()
+    @IBOutlet private weak var saludoLabel: UILabel!
+    @IBOutlet private weak var vendidoHoyLabel: UILabel!
+    @IBOutlet private weak var igvMesLabel: UILabel!
+    @IBOutlet private weak var graficoStack: UIStackView!
+    @IBOutlet private weak var rankingStack: UIStackView!
+    @IBOutlet private weak var stockBajoStack: UIStackView!
+
+    @IBOutlet private weak var tarjetaHoyView: UIView!
+    @IBOutlet private weak var tarjetaMesView: UIView!
+    @IBOutlet private weak var tarjetaGraficoView: UIView!
+    @IBOutlet private weak var tarjetaRankingView: UIView!
+    @IBOutlet private weak var tarjetaStockView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Resumen"
-        view.backgroundColor = .systemGroupedBackground
-        construirInterfaz()
+        saludoLabel.font = .boldSystemFont(ofSize: 24)
+        vendidoHoyLabel.font = .boldSystemFont(ofSize: 22)
+        vendidoHoyLabel.textColor = .tecsupAzul
+        igvMesLabel.font = .boldSystemFont(ofSize: 22)
+        igvMesLabel.textColor = .tecsupVerde
+
+        for tarjeta in [tarjetaHoyView, tarjetaMesView, tarjetaGraficoView, tarjetaRankingView, tarjetaStockView] {
+            tarjeta?.backgroundColor = .secondarySystemGroupedBackground
+            tarjeta?.layer.cornerRadius = 14
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cargarDatos()
-    }
-
-    // MARK: - Interfaz
-
-    private func construirInterfaz() {
-        let scroll = UIScrollView()
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scroll)
-        NSLayoutConstraint.activate([
-            scroll.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-        saludoLabel.font = .boldSystemFont(ofSize: 24)
-
-        let indicadores = UIStackView(arrangedSubviews: [
-            tarjeta(titulo: "Vendido hoy", valor: vendidoHoyLabel, color: .tecsupAzul),
-            tarjeta(titulo: "IGV del mes", valor: igvMesLabel, color: .tecsupVerde)
-        ])
-        indicadores.axis = .horizontal
-        indicadores.distribution = .fillEqually
-        indicadores.spacing = 12
-
-        graficoStack.axis = .horizontal
-        graficoStack.alignment = .bottom
-        graficoStack.distribution = .fillEqually
-        graficoStack.spacing = 8
-
-        rankingStack.axis = .vertical
-        rankingStack.spacing = 10
-
-        stockBajoStack.axis = .vertical
-        stockBajoStack.spacing = 8
-
-        let stack = UIStackView(arrangedSubviews: [
-            saludoLabel,
-            indicadores,
-            seccion(titulo: "Ventas de los últimos 7 días (S/)", contenido: tarjetaContenedora(graficoStack, altura: 130)),
-            seccion(titulo: "Ranking de vendedores (mes)", contenido: tarjetaContenedora(rankingStack)),
-            seccion(titulo: "Stock bajo (≤ 5 unidades)", contenido: tarjetaContenedora(stockBajoStack))
-        ])
-        stack.axis = .vertical
-        stack.spacing = 24
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        scroll.addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: scroll.topAnchor, constant: 20),
-            stack.leadingAnchor.constraint(equalTo: scroll.leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(equalTo: scroll.trailingAnchor, constant: -20),
-            stack.bottomAnchor.constraint(equalTo: scroll.bottomAnchor, constant: -32),
-            stack.widthAnchor.constraint(equalTo: scroll.widthAnchor, constant: -40)
-        ])
-    }
-
-    private func tarjeta(titulo: String, valor: UILabel, color: UIColor) -> UIView {
-        let tituloLabel = UILabel()
-        tituloLabel.text = titulo
-        tituloLabel.font = .systemFont(ofSize: 13)
-        tituloLabel.textColor = .secondaryLabel
-        valor.font = .boldSystemFont(ofSize: 22)
-        valor.textColor = color
-
-        let col = UIStackView(arrangedSubviews: [tituloLabel, valor])
-        col.axis = .vertical
-        col.spacing = 4
-        return tarjetaContenedora(col)
-    }
-
-    private func tarjetaContenedora(_ contenido: UIView, altura: CGFloat? = nil) -> UIView {
-        let caja = UIView()
-        caja.backgroundColor = .secondarySystemGroupedBackground
-        caja.layer.cornerRadius = 14
-        contenido.translatesAutoresizingMaskIntoConstraints = false
-        caja.addSubview(contenido)
-        NSLayoutConstraint.activate([
-            contenido.topAnchor.constraint(equalTo: caja.topAnchor, constant: 14),
-            contenido.leadingAnchor.constraint(equalTo: caja.leadingAnchor, constant: 14),
-            contenido.trailingAnchor.constraint(equalTo: caja.trailingAnchor, constant: -14),
-            contenido.bottomAnchor.constraint(equalTo: caja.bottomAnchor, constant: -14)
-        ])
-        if let altura {
-            caja.heightAnchor.constraint(equalToConstant: altura).isActive = true
-        }
-        return caja
-    }
-
-    private func seccion(titulo: String, contenido: UIView) -> UIView {
-        let tituloLabel = UILabel()
-        tituloLabel.text = titulo
-        tituloLabel.font = .boldSystemFont(ofSize: 15)
-
-        let stack = UIStackView(arrangedSubviews: [tituloLabel, contenido])
-        stack.axis = .vertical
-        stack.spacing = 8
-        return stack
     }
 
     // MARK: - Datos

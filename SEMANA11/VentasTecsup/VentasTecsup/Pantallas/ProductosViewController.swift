@@ -4,12 +4,15 @@
 //
 //  Pantalla A3: listado de productos con búsqueda, chips de categoría
 //  y color según stock. Supervisor crea/edita/borra; Vendedor solo consulta.
+//  Tabla e identificador de celda definidos en Main.storyboard.
 //
 
 import UIKit
 import CoreData
 
-class ProductosViewController: UITableViewController {
+class ProductosViewController: UIViewController {
+
+    @IBOutlet private weak var tablaProductos: UITableView!
 
     private var productos: [Producto] = []
     private var categorias: [String] = ["Todos"]
@@ -23,7 +26,8 @@ class ProductosViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Productos"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tablaProductos.dataSource = self
+        tablaProductos.delegate = self
 
         navigationItem.searchController = buscador
         buscador.searchResultsUpdater = self
@@ -37,11 +41,11 @@ class ProductosViewController: UITableViewController {
         categoriaControl = UISegmentedControl(items: categorias)
         categoriaControl.selectedSegmentIndex = 0
         categoriaControl.addTarget(self, action: #selector(categoriaCambiada), for: .valueChanged)
-        let contenedor = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 44))
+        let contenedor = UIView(frame: CGRect(x: 0, y: 0, width: tablaProductos.bounds.width, height: 44))
         categoriaControl.frame = contenedor.bounds.insetBy(dx: 12, dy: 4)
         categoriaControl.autoresizingMask = [.flexibleWidth]
         contenedor.addSubview(categoriaControl)
-        tableView.tableHeaderView = contenedor
+        tablaProductos.tableHeaderView = contenedor
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +61,7 @@ class ProductosViewController: UITableViewController {
             let todos = try contexto.fetch(solicitud)
             actualizarCategorias(con: todos)
             productos = filtrar(todos)
-            tableView.reloadData()
+            tablaProductos.reloadData()
         } catch {
             mostrarAlerta(titulo: "Error", mensaje: "No se pudieron cargar los productos: \(error.localizedDescription)")
         }
@@ -134,16 +138,25 @@ class ProductosViewController: UITableViewController {
         present(alerta, animated: true)
     }
 
-    // MARK: - UITableViewDataSource
+    /// Insignia "N u." con color según el umbral de stock (verde/ámbar/rojo).
+    private func insigniaStock(_ stock: Int32) -> UIView {
+        let color: UIColor = stock > 10 ? .tecsupVerde : (stock >= 6 ? .tecsupAmbar : .tecsupRojo)
+        let insignia = InsigniaLabel(texto: "\(stock) u.", color: color)
+        insignia.frame.size = insignia.intrinsicContentSize
+        return insignia
+    }
+}
 
-    override func numberOfSections(in tableView: UITableView) -> Int { 1 }
+extension ProductosViewController: UITableViewDataSource, UITableViewDelegate {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int { 1 }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         productos.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let celda = tableView.dequeueReusableCell(withIdentifier: "celdaProducto", for: indexPath)
         let producto = productos[indexPath.row]
         var config = celda.defaultContentConfiguration()
         config.text = producto.nombre
@@ -153,25 +166,17 @@ class ProductosViewController: UITableViewController {
         return celda
     }
 
-    /// Insignia "N u." con color según el umbral de stock (verde/ámbar/rojo).
-    private func insigniaStock(_ stock: Int32) -> UIView {
-        let color: UIColor = stock > 10 ? .tecsupVerde : (stock >= 6 ? .tecsupAmbar : .tecsupRojo)
-        let insignia = InsigniaLabel(texto: "\(stock) u.", color: color)
-        insignia.frame.size = insignia.intrinsicContentSize
-        return insignia
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard esSupervisor else { return }
         presentarFormulario(producto: productos[indexPath.row])
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         esSupervisor
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         let producto = productos[indexPath.row]
         let contexto = SesionUsuario.compartida.contexto

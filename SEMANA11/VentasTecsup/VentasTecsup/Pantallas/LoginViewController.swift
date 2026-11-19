@@ -2,7 +2,7 @@
 //  LoginViewController.swift
 //  VentasTecsup
 //
-//  Pantalla A1: inicio de sesión.
+//  Pantalla A1: inicio de sesión. Interfaz en Main.storyboard.
 //
 
 import UIKit
@@ -10,109 +10,24 @@ import CoreData
 
 class LoginViewController: UIViewController {
 
-    private let logo: UILabel = {
-        let label = UILabel()
-        label.text = "🛒"
-        label.font = .systemFont(ofSize: 64)
-        label.textAlignment = .center
-        return label
-    }()
-
-    private let tituloLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Ventas Tecsup"
-        label.font = .boldSystemFont(ofSize: 26)
-        label.textAlignment = .center
-        return label
-    }()
-
-    private let subtituloLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Inicia sesión para continuar"
-        label.font = .systemFont(ofSize: 15)
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        return label
-    }()
-
-    private let usuarioField: UITextField = {
-        let field = UITextField()
-        field.placeholder = "Usuario"
-        field.borderStyle = .roundedRect
-        field.autocapitalizationType = .none
-        field.autocorrectionType = .no
-        return field
-    }()
-
-    private let claveField: UITextField = {
-        let field = UITextField()
-        field.placeholder = "Clave"
-        field.borderStyle = .roundedRect
-        field.isSecureTextEntry = true
-        return field
-    }()
-
-    private let errorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .systemRed
-        label.font = .systemFont(ofSize: 13)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.isHidden = true
-        return label
-    }()
-
-    private let ingresarButton: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.title = "Ingresar"
-        config.cornerStyle = .medium
-        let button = UIButton(configuration: config)
-        return button
-    }()
-
-    private let crearCuentaButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("¿Primera vez? Crear cuenta", for: .normal)
-        return button
-    }()
+    @IBOutlet private weak var usuarioField: UITextField!
+    @IBOutlet private weak var claveField: UITextField!
+    @IBOutlet private weak var errorLabel: UILabel!
+    @IBOutlet private weak var ingresarButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
-        construirInterfaz()
-        ingresarButton.addTarget(self, action: #selector(ingresarTocado), for: .touchUpInside)
-        crearCuentaButton.addTarget(self, action: #selector(crearCuentaTocada), for: .touchUpInside)
+
+        var config = UIButton.Configuration.filled()
+        config.title = "Ingresar"
+        config.cornerStyle = .medium
+        ingresarButton.configuration = config
+
+        errorLabel.isHidden = true
     }
 
-    private func construirInterfaz() {
-        let stack = UIStackView(arrangedSubviews: [
-            logo, tituloLabel, subtituloLabel,
-            espaciador(16),
-            usuarioField, claveField, errorLabel,
-            espaciador(8),
-            ingresarButton, crearCuentaButton
-        ])
-        stack.axis = .vertical
-        stack.spacing = 12
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
-            stack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
-            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
-            ingresarButton.heightAnchor.constraint(equalToConstant: 46)
-        ])
-    }
-
-    private func espaciador(_ altura: CGFloat) -> UIView {
-        let vista = UIView()
-        vista.heightAnchor.constraint(equalToConstant: altura).isActive = true
-        return vista
-    }
-
-    @objc private func ingresarTocado() {
+    @IBAction private func ingresarTocado(_ sender: Any) {
         errorLabel.isHidden = true
         let usuarioTexto = (usuarioField.text ?? "").trimmingCharacters(in: .whitespaces)
         let claveTexto = claveField.text ?? ""
@@ -144,8 +59,9 @@ class LoginViewController: UIViewController {
         errorLabel.isHidden = false
     }
 
-    @objc private func crearCuentaTocada() {
+    @IBAction private func crearCuentaTocada(_ sender: Any) {
         navigationController?.isNavigationBarHidden = false
-        navigationController?.pushViewController(RegistroViewController(), animated: true)
+        let registro: RegistroViewController = Pantalla.instanciar("Registro")
+        navigationController?.pushViewController(registro, animated: true)
     }
 }
