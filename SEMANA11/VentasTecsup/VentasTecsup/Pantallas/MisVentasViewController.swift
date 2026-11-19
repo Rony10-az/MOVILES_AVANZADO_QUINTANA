@@ -4,12 +4,15 @@
 //
 //  Pantalla A6: historial de ventas del vendedor conectado.
 //  El vendedor solo ve sus propias ventas (predicate por vendedor).
+//  Tabla e identificador de celda definidos en Main.storyboard.
 //
 
 import UIKit
 import CoreData
 
-class MisVentasViewController: UITableViewController {
+class MisVentasViewController: UIViewController {
+
+    @IBOutlet private weak var tablaMisVentas: UITableView!
 
     private var ventas: [Venta] = []
     private let buscador = UISearchController(searchResultsController: nil)
@@ -21,7 +24,8 @@ class MisVentasViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Mis ventas"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tablaMisVentas.dataSource = self
+        tablaMisVentas.delegate = self
 
         navigationItem.searchController = buscador
         buscador.searchResultsUpdater = self
@@ -37,8 +41,8 @@ class MisVentasViewController: UITableViewController {
         contenedor.spacing = 8
         contenedor.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         contenedor.isLayoutMarginsRelativeArrangement = true
-        contenedor.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 96)
-        tableView.tableHeaderView = contenedor
+        contenedor.frame = CGRect(x: 0, y: 0, width: tablaMisVentas.bounds.width, height: 96)
+        tablaMisVentas.tableHeaderView = contenedor
     }
 
     private func construirIndicadores() -> UIStackView {
@@ -74,7 +78,7 @@ class MisVentasViewController: UITableViewController {
             let todas = try contexto.fetch(solicitud)
             actualizarIndicadores(todas)
             ventas = aplicarFiltros(todas)
-            tableView.reloadData()
+            tablaMisVentas.reloadData()
         } catch {
             mostrarAlerta(titulo: "Error", mensaje: "No se pudieron cargar tus ventas: \(error.localizedDescription)")
         }
@@ -111,13 +115,16 @@ class MisVentasViewController: UITableViewController {
     @objc private func filtroCambiado() {
         cargarVentas()
     }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension MisVentasViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         ventas.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let celda = tableView.dequeueReusableCell(withIdentifier: "celdaMisVenta", for: indexPath)
         let venta = ventas[indexPath.row]
         var config = celda.defaultContentConfiguration()
 

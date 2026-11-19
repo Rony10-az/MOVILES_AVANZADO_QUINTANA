@@ -4,12 +4,15 @@
 //
 //  Pantalla A4: clientes con categoría y total comprado calculados.
 //  Ambos roles crean/editan; solo Supervisor borra.
+//  Tabla e identificador de celda definidos en Main.storyboard.
 //
 
 import UIKit
 import CoreData
 
-class ClientesViewController: UITableViewController {
+class ClientesViewController: UIViewController {
+
+    @IBOutlet private weak var tablaClientes: UITableView!
 
     private var clientes: [Cliente] = []
     private let buscador = UISearchController(searchResultsController: nil)
@@ -21,7 +24,8 @@ class ClientesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Clientes"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tablaClientes.dataSource = self
+        tablaClientes.delegate = self
 
         navigationItem.searchController = buscador
         buscador.searchResultsUpdater = self
@@ -48,7 +52,7 @@ class ClientesViewController: UITableViewController {
                 }
             }
             clientes = todos
-            tableView.reloadData()
+            tablaClientes.reloadData()
         } catch {
             mostrarAlerta(titulo: "Error", mensaje: "No se pudieron cargar los clientes: \(error.localizedDescription)")
         }
@@ -91,14 +95,23 @@ class ClientesViewController: UITableViewController {
         present(alerta, animated: true)
     }
 
-    // MARK: - UITableViewDataSource
+    private func colorCategoria(_ categoria: CategoriaCliente) -> UIColor {
+        switch categoria {
+        case .vip: return .systemPurple
+        case .frecuente: return .tecsupAzul
+        case .regular: return .systemGray
+        }
+    }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ClientesViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         clientes.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let celda = tableView.dequeueReusableCell(withIdentifier: "celdaCliente", for: indexPath)
         let cliente = clientes[indexPath.row]
         var config = celda.defaultContentConfiguration()
         config.text = cliente.nombre
@@ -113,24 +126,16 @@ class ClientesViewController: UITableViewController {
         return celda
     }
 
-    private func colorCategoria(_ categoria: CategoriaCliente) -> UIColor {
-        switch categoria {
-        case .vip: return .systemPurple
-        case .frecuente: return .tecsupAzul
-        case .regular: return .systemGray
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         presentarFormulario(cliente: clientes[indexPath.row])
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         esSupervisor
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         let cliente = clientes[indexPath.row]
         let contexto = SesionUsuario.compartida.contexto

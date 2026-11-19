@@ -39,7 +39,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if SesionUsuario.compartida.usuarioActual != nil {
             return MainTabBarController()
         } else {
-            return UINavigationController(rootViewController: LoginViewController())
+            let login: LoginViewController = Pantalla.instanciar("Login")
+            return UINavigationController(rootViewController: login)
         }
     }
 

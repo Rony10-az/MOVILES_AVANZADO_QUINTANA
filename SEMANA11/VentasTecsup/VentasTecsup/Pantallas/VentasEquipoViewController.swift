@@ -4,12 +4,15 @@
 //
 //  Pantalla A7 (Ventas del equipo) y A8 (Anular venta): el Supervisor
 //  ve todas las ventas, filtra por vendedor y puede anular con motivo.
+//  Tabla e identificador de celda definidos en Main.storyboard.
 //
 
 import UIKit
 import CoreData
 
-class VentasEquipoViewController: UITableViewController {
+class VentasEquipoViewController: UIViewController {
+
+    @IBOutlet private weak var tablaVentasEquipo: UITableView!
 
     private var ventas: [Venta] = []
     private var vendedores: [String] = ["Todos"]
@@ -19,7 +22,8 @@ class VentasEquipoViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Ventas del equipo"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "celda")
+        tablaVentasEquipo.dataSource = self
+        tablaVentasEquipo.delegate = self
 
         navigationItem.searchController = buscador
         buscador.searchResultsUpdater = self
@@ -29,11 +33,11 @@ class VentasEquipoViewController: UITableViewController {
         vendedorControl = UISegmentedControl(items: vendedores)
         vendedorControl.selectedSegmentIndex = 0
         vendedorControl.addTarget(self, action: #selector(filtroCambiado), for: .valueChanged)
-        let contenedor = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 44))
+        let contenedor = UIView(frame: CGRect(x: 0, y: 0, width: tablaVentasEquipo.bounds.width, height: 44))
         vendedorControl.frame = contenedor.bounds.insetBy(dx: 12, dy: 4)
         vendedorControl.autoresizingMask = [.flexibleWidth]
         contenedor.addSubview(vendedorControl)
-        tableView.tableHeaderView = contenedor
+        tablaVentasEquipo.tableHeaderView = contenedor
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +53,7 @@ class VentasEquipoViewController: UITableViewController {
             let todas = try contexto.fetch(solicitud)
             actualizarVendedores(todas)
             ventas = aplicarFiltros(todas)
-            tableView.reloadData()
+            tablaVentasEquipo.reloadData()
         } catch {
             mostrarAlerta(titulo: "Error", mensaje: "No se pudieron cargar las ventas: \(error.localizedDescription)")
         }
@@ -81,43 +85,6 @@ class VentasEquipoViewController: UITableViewController {
 
     @objc private func filtroCambiado() {
         cargarVentas()
-    }
-
-    // MARK: - Tabla
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        ventas.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath)
-        let venta = ventas[indexPath.row]
-        var config = celda.defaultContentConfiguration()
-        let fechaTexto = venta.fecha.map { DateFormatter.localizedString(from: $0, dateStyle: .short, timeStyle: .none) } ?? ""
-        let textoBase = "\(venta.cliente?.nombre ?? "-") · \(venta.vendedor?.nombre ?? "-")"
-
-        if venta.anulada {
-            config.attributedText = NSAttributedString(string: textoBase, attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-            config.secondaryText = "Anulada: \(venta.motivoAnulacion ?? "") · \(fechaTexto)"
-            config.secondaryTextProperties.color = .systemRed
-        } else {
-            config.text = textoBase
-            config.secondaryText = "\(venta.producto?.nombre ?? "-") × \(venta.cantidad) · \(fechaTexto) · \(venta.total.comoMoneda)"
-        }
-        celda.contentConfiguration = config
-        celda.selectionStyle = .none
-        return celda
-    }
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        !ventas[indexPath.row].anulada
-    }
-
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let anular = UITableViewRowAction(style: .destructive, title: "Anular") { [weak self] _, indexPath in
-            self?.pedirMotivoYAnular(venta: self!.ventas[indexPath.row])
-        }
-        return [anular]
     }
 
     // MARK: - Anular (A8)
@@ -154,6 +121,44 @@ class VentasEquipoViewController: UITableViewController {
             contexto.rollback()
             mostrarAlerta(titulo: "Error", mensaje: "No se pudo anular la venta: \(error.localizedDescription)")
         }
+    }
+}
+
+extension VentasEquipoViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        ventas.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let celda = tableView.dequeueReusableCell(withIdentifier: "celdaVentaEquipo", for: indexPath)
+        let venta = ventas[indexPath.row]
+        var config = celda.defaultContentConfiguration()
+        let fechaTexto = venta.fecha.map { DateFormatter.localizedString(from: $0, dateStyle: .short, timeStyle: .none) } ?? ""
+        let textoBase = "\(venta.cliente?.nombre ?? "-") · \(venta.vendedor?.nombre ?? "-")"
+
+        if venta.anulada {
+            config.attributedText = NSAttributedString(string: textoBase, attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+            config.secondaryText = "Anulada: \(venta.motivoAnulacion ?? "") · \(fechaTexto)"
+            config.secondaryTextProperties.color = .systemRed
+        } else {
+            config.text = textoBase
+            config.secondaryText = "\(venta.producto?.nombre ?? "-") × \(venta.cantidad) · \(fechaTexto) · \(venta.total.comoMoneda)"
+        }
+        celda.contentConfiguration = config
+        celda.selectionStyle = .none
+        return celda
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        !ventas[indexPath.row].anulada
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let anular = UITableViewRowAction(style: .destructive, title: "Anular") { [weak self] _, indexPath in
+            self?.pedirMotivoYAnular(venta: self!.ventas[indexPath.row])
+        }
+        return [anular]
     }
 }
 
